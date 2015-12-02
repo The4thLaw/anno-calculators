@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title></title>
+		<title>Anno 2070 Calculator</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-cyan.min.css" /> 
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
@@ -9,7 +9,6 @@
 		<link rel="stylesheet" href="common.css"> 
 		<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<!--<script src="jquery-2.1.4.min.js"></script>-->
 		<script src="common.js"></script>
 		<script type="text/javascript">
 
@@ -142,128 +141,141 @@ $(function() {
 				</div>
 			</header>
 			<main class="mdl-layout__content">
-				<h5>Options</h5>
 				<section>
-					<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="opt-round-counts">
-						<input type="checkbox" id="opt-round-counts" class="mdl-switch__input">
-						<span class="mdl-switch__label">Round requirements</span>
-					</label>
-				</section>
-				<h5>Population</h5>
-				<section>
-					<h6>Eco</h6>
-					<section class="mdl-grid">
-						<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
-							<label class="pop-icon" for="pop_eco_lvl_1"><img src="img/2070/pop_eco_lvl_1.png" alt="Eco workers icon" /></label>
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input" type="number" id="pop_eco_lvl_1">
-								<label class="mdl-textfield__label" for="pop_eco_lvl_1">Workers</label>
-							</div>
-						</div>
-						<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
-							<label class="pop-icon" for="pop_eco_lvl_2"><img src="img/2070/pop_eco_lvl_2.png" alt="Eco employees icon" /></label>
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input" type="number" id="pop_eco_lvl_2">
-								<label class="mdl-textfield__label" for="pop_eco_lvl_2">Employees</label>
-							</div>
-						</div>
-						<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
-							<label class="pop-icon" for="pop_eco_lvl_3"><img src="img/2070/pop_eco_lvl_3.png" alt="Eco engineers icon" /></label>
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input" type="number" id="pop_eco_lvl_3">
-								<label class="mdl-textfield__label" for="pop_eco_lvl_3">Engineers</label>
-							</div>
-						</div>
-						<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
-							<label class="pop-icon" for="pop_eco_lvl_4"><img src="img/2070/pop_eco_lvl_4.png" alt="Eco executives icon" /></label>
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input" type="number" id="pop_eco_lvl_4">
-								<label class="mdl-textfield__label" for="pop_eco_lvl_4">Executives</label>
-							</div>
-						</div>
-					</section>
+					<h5>Options</h5>
+					<div>
+						<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="opt-round-counts">
+							<input type="checkbox" id="opt-round-counts" class="mdl-switch__input">
+							<span class="mdl-switch__label">Round requirements</span>
+						</label>
+					</div>
 				</section>
 				
-				<h5>Chain details</h5>
 				<section>
-					<h6>Eco</h6>
-					<section class="mdl-grid">
-						<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
-							<div class="product prod_fish" data-supports="250,364,571,800"></div>
-						</div>
-						<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
-							<div class="product prod_tea" data-supports="375,375,500,750"></div>
-						</div>
-						<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
-							<div class="product prod_health_food" data-supports="0,667,857,1000"></div>
-							<div class="material mat_vegetables chain--level-1" data-ratio="2" data-factory="prod_health_food"></div>
-							<div class="material mat_rice chain--level-1" data-ratio="1" data-factory="prod_health_food"></div>
-						</div>
-						<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
-							<div class="product prod_communicator" data-supports="0,571,800,1250"></div>
-							<div class="material mat_chip chain--level-1" data-ratio="1" data-factory="prod_communicator"></div>
-							<div class="material mat_copper chain--level-2" data-ratio="0.5" data-factory="mat_chip"></div>
-							<div class="material mat_sand chain--level-2" data-ratio="0.3333333333" data-factory="mat_chip"></div>
-							<div class="material mat_chip_recycled chain--level-1" data-ratio="0.6666666666" data-factory="prod_communicator"></div>
-						</div>
-						<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
-							<div class="product prod_bio_drink" data-supports="0,0,833,1136"></div>
-							<div class="material mat_fruit chain--level-1" data-ratio="2" data-factory="prod_bio_drink"></div>
-							<div class="material mat_milk chain--level-1" data-ratio="1" data-factory="prod_bio_drink"></div>
-						</div>
-						<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
-							<div class="product prod_pasta_dish" data-supports="0,0,667,909"></div>
-							<div class="material mat_vegetables chain--level-1" data-ratio="1" data-factory="prod_pasta_dish"></div>
-							<div class="material mat_pasta chain--level-1" data-ratio="0.5" data-factory="prod_pasta_dish"></div>
-							<div class="material mat_wheat chain--level-2" data-ratio="3" data-factory="mat_pasta"></div>
-						</div>
-						<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
-							<div class="product prod_3d_projector" data-supports="0,0,0,750"></div>
-							<div class="material mat_diamond chain--level-1" data-ratio="0.5617977528" data-factory="prod_3d_projector"></div><!-- 1 / 2 / 0.89 -->
-							<div class="material mat_rare_earth chain--level-1" data-ratio="1.1235955056" data-factory="prod_3d_projector"></div><!-- 1 / 0.89 -->
-							<div class="material mat_manganese chain--level-2" data-ratio="0.5" data-factory="mat_rare_earth"></div>
-						</div>
-						<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
-							<div class="product prod_robot" data-supports="0,0,0,666"></div>
-							<div class="material mat_chip chain--level-1" data-ratio="0.5" data-factory="prod_robot"></div>
-							<div class="material mat_copper chain--level-2" data-ratio="0.5" data-factory="mat_chip"></div>
-							<div class="material mat_sand chain--level-2" data-ratio="0.3333333333" data-factory="mat_chip"></div>	
-							<div class="material mat_chip_recycled chain--level-1" data-ratio="0.6666666666" data-factory="prod_robot"></div>
-							<div class="material mat_biopolymer chain--level-1" data-ratio="1" data-factory="prod_robot"></div>
-							<div class="material mat_alga chain--level-2" data-ratio="1" data-factory="mat_biopolymer"></div>
-							<div class="material mat_corn chain--level-2" data-ratio="2" data-factory="mat_biopolymer"></div>
-						</div>
-					</section>
+					<h5>Population</h5>
+					<div>
+						<section>
+							<h6>Eco</h6>
+							<div class="mdl-grid">
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+									<label class="pop-icon" for="pop_eco_lvl_1"><img src="img/2070/pop_eco_lvl_1.png" alt="Eco workers icon" /></label>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input" type="number" id="pop_eco_lvl_1">
+										<label class="mdl-textfield__label" for="pop_eco_lvl_1">Workers</label>
+									</div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+									<label class="pop-icon" for="pop_eco_lvl_2"><img src="img/2070/pop_eco_lvl_2.png" alt="Eco employees icon" /></label>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input" type="number" id="pop_eco_lvl_2">
+										<label class="mdl-textfield__label" for="pop_eco_lvl_2">Employees</label>
+									</div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+									<label class="pop-icon" for="pop_eco_lvl_3"><img src="img/2070/pop_eco_lvl_3.png" alt="Eco engineers icon" /></label>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input" type="number" id="pop_eco_lvl_3">
+										<label class="mdl-textfield__label" for="pop_eco_lvl_3">Engineers</label>
+									</div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+									<label class="pop-icon" for="pop_eco_lvl_4"><img src="img/2070/pop_eco_lvl_4.png" alt="Eco executives icon" /></label>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input" type="number" id="pop_eco_lvl_4">
+										<label class="mdl-textfield__label" for="pop_eco_lvl_4">Executives</label>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</section>
+				
+				<section>
+					<h5>Chain details</h5>
+					<div>
+						<section>
+							<h6>Eco</h6>
+							<div class="mdl-grid">
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_fish" data-supports="250,364,571,800"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_tea" data-supports="375,375,500,750"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_health_food" data-supports="0,667,857,1000"></div>
+									<div class="material mat_vegetables chain--level-1" data-ratio="2" data-factory="prod_health_food"></div>
+									<div class="material mat_rice chain--level-1" data-ratio="1" data-factory="prod_health_food"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_communicator" data-supports="0,571,800,1250"></div>
+									<div class="material mat_chip chain--level-1" data-ratio="1" data-factory="prod_communicator"></div>
+									<div class="material mat_copper chain--level-2" data-ratio="0.5" data-factory="mat_chip"></div>
+									<div class="material mat_sand chain--level-2" data-ratio="0.3333333333" data-factory="mat_chip"></div>
+									<div class="material mat_chip_recycled chain--level-1" data-ratio="0.6666666666" data-factory="prod_communicator"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_bio_drink" data-supports="0,0,833,1136"></div>
+									<div class="material mat_fruit chain--level-1" data-ratio="2" data-factory="prod_bio_drink"></div>
+									<div class="material mat_milk chain--level-1" data-ratio="1" data-factory="prod_bio_drink"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_pasta_dish" data-supports="0,0,667,909"></div>
+									<div class="material mat_vegetables chain--level-1" data-ratio="1" data-factory="prod_pasta_dish"></div>
+									<div class="material mat_pasta chain--level-1" data-ratio="0.5" data-factory="prod_pasta_dish"></div>
+									<div class="material mat_wheat chain--level-2" data-ratio="3" data-factory="mat_pasta"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_3d_projector" data-supports="0,0,0,750"></div>
+									<div class="material mat_diamond chain--level-1" data-ratio="0.5617977528" data-factory="prod_3d_projector"></div><!-- 1 / 2 / 0.89 -->
+									<div class="material mat_rare_earth chain--level-1" data-ratio="1.1235955056" data-factory="prod_3d_projector"></div><!-- 1 / 0.89 -->
+									<div class="material mat_manganese chain--level-2" data-ratio="0.5" data-factory="mat_rare_earth"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_robot" data-supports="0,0,0,666"></div>
+									<div class="material mat_chip chain--level-1" data-ratio="0.5" data-factory="prod_robot"></div>
+									<div class="material mat_copper chain--level-2" data-ratio="0.5" data-factory="mat_chip"></div>
+									<div class="material mat_sand chain--level-2" data-ratio="0.3333333333" data-factory="mat_chip"></div>	
+									<div class="material mat_chip_recycled chain--level-1" data-ratio="0.6666666666" data-factory="prod_robot"></div>
+									<div class="material mat_biopolymer chain--level-1" data-ratio="1" data-factory="prod_robot"></div>
+									<div class="material mat_alga chain--level-2" data-ratio="1" data-factory="mat_biopolymer"></div>
+									<div class="material mat_corn chain--level-2" data-ratio="2" data-factory="mat_biopolymer"></div>
+								</div>
+							</div>
+						</section>
+					</div>
 				</section>				
-				<h5>Requirements summary</h5>
-				<section class="mdl-grid">
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_fish"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_tea"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_health_food"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_vegetables"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_rice"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_communicator"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_chip"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_copper"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_sand"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_chip_recycled"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_bio_drink"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_fruit"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_milk"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_pasta_dish"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_pasta"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_wheat"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_3d_projector"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_diamond"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_rare_earth"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_manganese"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_robot"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_biopolymer"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_alga"></div>
-					<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_corn"></div>
+				
+				<section>
+					<h5>Requirements summary</h5>
+					<div class="mdl-grid">
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_fish"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_tea"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_health_food"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_vegetables"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_rice"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_communicator"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_chip"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_copper"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_sand"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_chip_recycled"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_bio_drink"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_fruit"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_milk"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_pasta_dish"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_pasta"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_wheat"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_3d_projector"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_diamond"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_rare_earth"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_manganese"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_robot"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_biopolymer"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_alga"></div>
+						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_corn"></div>
+					</div>
 				</section>
 			</main>
 		</div>
 	</body>
 </html>
-
