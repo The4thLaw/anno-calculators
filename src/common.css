@@ -1,0 +1,30 @@
+main {
+	padding: 8px;
+}
+
+label.pop-icon {
+	text-align: center;
+	display: block;
+	width: 100%;
+}
+
+h5, h6 {
+	cursor: pointer;
+}
+
+.mdl-textfield__input.efficiency {
+	display: inline;
+	width: 4em;
+}
+			
+.chain--level-1 {
+	padding-left: 2em;
+}
+			
+.chain--level-2 {
+	padding-left: 4em;
+}
+			
+.no-need {
+	opacity: 0.5;
+}
