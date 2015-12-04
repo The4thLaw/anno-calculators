@@ -1,11 +1,18 @@
+html, body {
+	/* Prevent some special UAs like Steam from making text unreadable */
+	background: #fff;
+}
+
 main {
 	padding: 8px;
 }
 
 label.pop-icon {
-	text-align: center;
 	display: block;
 	width: 100%;
+}
+#population .mdl-cell {
+	text-align: center;
 }
 
 h5, h6 {
@@ -26,5 +33,15 @@ h5, h6 {
 }
 			
 .no-need {
-	opacity: 0.5;
+	opacity: 0.35;
+}
+
+.opt-save-buttons {
+	margin-bottom: 2em;
+	word-spacing: 1.5em;
+}
+
+#save-list {
+	display: inline;
+	width: auto;
 }

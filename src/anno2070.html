@@ -7,142 +7,26 @@
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
 		<link rel="stylesheet" href="common.css"> 
-		<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+		<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js" async></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.4/js.cookie.min.js"></script>
 		<script src="common.js"></script>
-		<script type="text/javascript">
-
-
-function getPopulationCount(id) {
-	var count = $('#'+id).val();
-	return count == '' ? 0 : parseInt(count)
-}
-
-function getEfficiency(scope) {
-	var efficiency = $('input.efficiency', scope).val();
-	return efficiency == '' ? 1 : parseInt(efficiency)/100;
-}
-			
-function setCount(element, count) {
-	$(element).data('raw-count', count);
-	var roundedCount = Math.ceil(count);
-	count = Math.round(count*100)/100;
-	$('.count', element).html(count);
-	$('.count--rounded', element).html(roundedCount);
-	
-	if (count == 0) {
-		$(element).addClass('no-need');
-	} else {
-		$(element).removeClass('no-need');
-	}
-}
-			
-function computeMaterial(element) {
-	var factoryName = $(element).data('factory');
-	var factory = $('.' + factoryName, $(element).parents('.chain').get(0));
-	var efficiency = getEfficiency(element);
-	var count = parseFloat(factory.data('raw-count')) * parseFloat($(element).data('ratio')) / efficiency;
-	setCount(element, count);
-}
-
-var computationTimer;			
-			
-function compute() {
-	clearTimeout(computationTimer);
-	computationTimer = setTimeout(doCompute, 100);
-}
-
-function doCompute() {
-	var populationCounts = [
-		getPopulationCount('pop_eco_lvl_1'),
-		getPopulationCount('pop_eco_lvl_2'),
-		getPopulationCount('pop_eco_lvl_3'),
-		getPopulationCount('pop_eco_lvl_4')
-	];
-	
-	$('.product:not(.summary)').each(function() {
-		var efficiency = getEfficiency(this);
-		var supports = $(this).data('supports').split(/,/);
-		var count = 0;
-		for (i = 0; i < populationCounts.length; i++) {
-			if (populationCounts[i] > 0 && supports[i] > 0) {
-				count += populationCounts[i] / supports[i] / efficiency;
-			}
-		}
-		setCount(this, count);
-	});
-	
-	$('.material.chain--level-1').each(function () {
-		computeMaterial(this);
-	});
-	$('.material.chain--level-2').each(function () {
-		computeMaterial(this);
-	});
-	
-	$('[data-sum-of]').each(function () {
-		var elements = $('.' + $(this).data('sum-of') + ':not(.summary)');
-		var sum = 0;
-		elements.each(function () {
-			sum += parseFloat($(this).data('raw-count'));
-		});
-		setCount(this, sum);
-	});
-}
-
-function generateMarkup() {
-	$('[data-sum-of]').each(function () {
-		$(this).addClass($(this).data('sum-of'));
-	});
-	
-	$('.product, .material').each(function () {
-		var classes = $(this).attr('class').split(/ /);
-		for (i = 0; i < classes.length; i++) {
-			if (classes[i].match(/^(prod_|mat_)/)) {
-				$(this).append('<img src="img/2070/' + classes[i] + '.png" >');
-				break;
-			}
-		}
-		
-		$(this).append('<span class="count--rounded">0</span><span class="count">0</span>');
-		if (!$(this).is('.summary')) {
-			$(this).append(' @ <input class="mdl-textfield__input efficiency" type="number" value="100">%');
-		}
-	});
-}
-
-$(function() {
-	generateMarkup();
-	
-	$('input').change(compute);
-	$('input').keyup(compute);
-	$('input').click(compute);
-	
-	$('.count--rounded').hide();
-	$('#opt-round-counts').change(function () {
-		if ($(this).is(':checked')) {
-			$('.count--rounded').show();
-			$('.count').hide();
-		} else {
-			$('.count--rounded').hide();
-			$('.count').show();
-		}
-	});
-	$('#opt-round-counts').change();
-	
-	$('.summary > input').attr('disabled', '');
-});
-		</script>
 	</head>
 	<body>
 		<div class="mdl-layout mdl-js-layout">
 			<header class="mdl-layout__header">
 				<div class="mdl-layout__header-row">
-					<span class="mdl-layout-title">2070</span>
+					<span class="mdl-layout-title">Anno 2070 Calculator</span>
 				</div>
 			</header>
 			<main class="mdl-layout__content">
 				<section>
 					<h5>Options</h5>
+					<div class="opt-save-buttons">
+						<select id="save-list" class="mdl-textfield__input"></select>
+						<button id="btn-load" class="mdl-button mdl-button--raised mdl-button--colored"><i class="material-icons">file_upload</i> Load</button>
+						<button id="btn-save" class="mdl-button mdl-button--raised mdl-button--colored"><i class="material-icons">file_download</i> Save</button>
+					</div>
 					<div>
 						<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="opt-round-counts">
 							<input type="checkbox" id="opt-round-counts" class="mdl-switch__input">
@@ -151,37 +35,37 @@ $(function() {
 					</div>
 				</section>
 				
-				<section>
+				<section id="population">
 					<h5>Population</h5>
 					<div>
-						<section>
+						<section data-pop-class="eco">
 							<h6>Eco</h6>
 							<div class="mdl-grid">
 								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
 									<label class="pop-icon" for="pop_eco_lvl_1"><img src="img/2070/pop_eco_lvl_1.png" alt="Eco workers icon" /></label>
 									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-										<input class="mdl-textfield__input" type="number" id="pop_eco_lvl_1">
+										<input class="mdl-textfield__input pop_count" type="number" class="" id="pop_eco_lvl_1">
 										<label class="mdl-textfield__label" for="pop_eco_lvl_1">Workers</label>
 									</div>
 								</div>
 								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
 									<label class="pop-icon" for="pop_eco_lvl_2"><img src="img/2070/pop_eco_lvl_2.png" alt="Eco employees icon" /></label>
 									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-										<input class="mdl-textfield__input" type="number" id="pop_eco_lvl_2">
+										<input class="mdl-textfield__input pop_count" type="number" id="pop_eco_lvl_2">
 										<label class="mdl-textfield__label" for="pop_eco_lvl_2">Employees</label>
 									</div>
 								</div>
 								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
 									<label class="pop-icon" for="pop_eco_lvl_3"><img src="img/2070/pop_eco_lvl_3.png" alt="Eco engineers icon" /></label>
 									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-										<input class="mdl-textfield__input" type="number" id="pop_eco_lvl_3">
+										<input class="mdl-textfield__input pop_count" type="number" id="pop_eco_lvl_3">
 										<label class="mdl-textfield__label" for="pop_eco_lvl_3">Engineers</label>
 									</div>
 								</div>
 								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
 									<label class="pop-icon" for="pop_eco_lvl_4"><img src="img/2070/pop_eco_lvl_4.png" alt="Eco executives icon" /></label>
 									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-										<input class="mdl-textfield__input" type="number" id="pop_eco_lvl_4">
+										<input class="mdl-textfield__input pop_count" type="number" id="pop_eco_lvl_4">
 										<label class="mdl-textfield__label" for="pop_eco_lvl_4">Executives</label>
 									</div>
 								</div>
@@ -190,10 +74,10 @@ $(function() {
 					</div>
 				</section>
 				
-				<section>
+				<section id="chains">
 					<h5>Chain details</h5>
 					<div>
-						<section>
+						<section id="chain_eco" data-pop-class="eco">
 							<h6>Eco</h6>
 							<div class="mdl-grid">
 								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
@@ -235,7 +119,7 @@ $(function() {
 									<div class="product prod_robot" data-supports="0,0,0,666"></div>
 									<div class="material mat_chip chain--level-1" data-ratio="0.5" data-factory="prod_robot"></div>
 									<div class="material mat_copper chain--level-2" data-ratio="0.5" data-factory="mat_chip"></div>
-									<div class="material mat_sand chain--level-2" data-ratio="0.3333333333" data-factory="mat_chip"></div>	
+									<div class="material mat_sand chain--level-2" data-ratio="0.3333333333" data-factory="mat_chip"></div>
 									<div class="material mat_chip_recycled chain--level-1" data-ratio="0.6666666666" data-factory="prod_robot"></div>
 									<div class="material mat_biopolymer chain--level-1" data-ratio="1" data-factory="prod_robot"></div>
 									<div class="material mat_alga chain--level-2" data-ratio="1" data-factory="mat_biopolymer"></div>
@@ -246,36 +130,53 @@ $(function() {
 					</div>
 				</section>				
 				
-				<section>
+				<section id="summaries">
 					<h5>Requirements summary</h5>
 					<div class="mdl-grid">
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_fish"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_tea"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_health_food"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_vegetables"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_rice"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_communicator"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_chip"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_copper"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_sand"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_chip_recycled"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_bio_drink"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_fruit"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_milk"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_pasta_dish"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_pasta"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_wheat"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_3d_projector"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_diamond"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_rare_earth"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_manganese"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="prod_robot"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_biopolymer"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_alga"></div>
-						<div class="mdl-cell mdl-cell--2-col product summary" data-sum-of="mat_corn"></div>
+						<!-- Pop Class 1: Common -->
+						<div class="mdl-cell mdl-cell--2-col product" data-sum-of="prod_fish"></div>
+						<!-- Pop Class 1: Eco -->
+						<div class="mdl-cell mdl-cell--2-col product" data-sum-of="prod_tea"></div>
+						<!-- Pop Class 1: Tycoon -->
+						<!-- Pop Class 2: Eco -->
+						<div class="mdl-cell mdl-cell--2-col product" data-sum-of="prod_health_food"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_vegetables"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_rice"></div>
+						<div class="mdl-cell mdl-cell--2-col product" data-sum-of="prod_communicator"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_chip"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_copper"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_sand"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_chip_recycled"></div>
+						<!-- Pop Class 2: Tycoon -->
+						<!-- Pop Class 2: Tech -->
+						<!-- Pop Class 3: Eco -->
+						<div class="mdl-cell mdl-cell--2-col product" data-sum-of="prod_bio_drink"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_fruit"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_milk"></div>
+						<div class="mdl-cell mdl-cell--2-col product" data-sum-of="prod_pasta_dish"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_pasta"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_wheat"></div>
+						<!-- Pop Class 3: Tycoon -->
+						<!-- Pop Class 3: Tech -->
+						<!-- Pop Class 4: Eco -->
+						<div class="mdl-cell mdl-cell--2-col product" data-sum-of="prod_3d_projector"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_diamond"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_rare_earth"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_manganese"></div>
+						<div class="mdl-cell mdl-cell--2-col product" data-sum-of="prod_robot"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_biopolymer"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_alga"></div>
+						<div class="mdl-cell mdl-cell--2-col material" data-sum-of="mat_corn"></div>
+						<!-- Pop Class 4: Tycoon -->
+						<!-- Pop Class 4: Tech -->
 					</div>
 				</section>
 			</main>
 		</div>
+		<script type="text/javascript">
+$(function() {
+	anno.init('2070');
+});
+		</script>
 	</body>
 </html>
