@@ -157,6 +157,9 @@ var anno = {
 		$('.material.chain--level-2').each(function () {
 			anno.computeMaterial(this);
 		});
+		$('.material.chain--level-3').each(function () {
+			anno.computeMaterial(this);
+		});
 
 		$('[data-sum-of]').each(function () {
 			var elements = $('.' + $(this).data('sum-of') + ':not(.summary)'),
