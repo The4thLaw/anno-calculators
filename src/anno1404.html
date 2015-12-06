@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Anno 1404 Calculator</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-cyan.min.css" /> 
+		<!-- TODO remove the previous stylesheet -->
+		<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.orange-yellow.min.css" />
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
+		<link rel="stylesheet" href="common.css"> 
+		<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js" async></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.4/js.cookie.min.js"></script>
+		<script src="common.js"></script>
+	</head>
+	<body>
+		<div class="mdl-layout mdl-js-layout">
+			<header class="mdl-layout__header">
+				<div class="mdl-layout__header-row">
+					<span class="mdl-layout-title">Anno 1404 Calculator</span>
+				</div>
+			</header>
+			<main class="mdl-layout__content">
+				<section>
+					<h5>Options</h5>
+					<div class="opt-save-buttons">
+						<select id="save-list" class="mdl-textfield__input"></select>
+						<button id="btn-load" class="mdl-button mdl-button--raised mdl-button--colored"><i class="material-icons">file_upload</i> Load</button>
+						<button id="btn-save" class="mdl-button mdl-button--raised mdl-button--colored"><i class="material-icons">file_download</i> Save</button>
+					</div>
+					<div>
+						<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="opt-round-counts">
+							<input type="checkbox" id="opt-round-counts" class="mdl-switch__input">
+							<span class="mdl-switch__label">Round requirements</span>
+						</label>
+					</div>
+				</section>
+				
+				<section id="population">
+					<h5>Population</h5>
+					<div>
+						<section data-pop-class="occident">
+							<h6>Occident</h6>
+							<div class="mdl-grid">
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+									<label class="pop-icon" for="pop_occident_lvl_O"><img src="img/1404/pop_beggar.png" alt="" /></label>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input pop_count" type="number" class="" id="pop_occident_lvl_O">
+										<label class="mdl-textfield__label" for="pop_occident_lvl_O">Beggars</label>
+									</div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+									<label class="pop-icon" for="pop_occident_lvl_1"><img src="img/1404/pop_peasant.png" alt="" /></label>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input pop_count" type="number" class="" id="pop_occident_lvl_1">
+										<label class="mdl-textfield__label" for="pop_occident_lvl_1">Peasants</label>
+									</div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+									<label class="pop-icon" for="pop_occident_lvl_2"><img src="img/1404/pop_citizen.png" alt="" /></label>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input pop_count" type="number" class="" id="pop_occident_lvl_2">
+										<label class="mdl-textfield__label" for="pop_occident_lvl_2">Citizens</label>
+									</div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+									<label class="pop-icon" for="pop_occident_lvl_3"><img src="img/1404/pop_patrician.png" alt="" /></label>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input pop_count" type="number" class="" id="pop_occident_lvl_3">
+										<label class="mdl-textfield__label" for="pop_occident_lvl_3">Patricians</label>
+									</div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+									<label class="pop-icon" for="pop_occident_lvl_4"><img src="img/1404/pop_nobleman.png" alt="" /></label>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input pop_count" type="number" class="" id="pop_occident_lvl_4">
+										<label class="mdl-textfield__label" for="pop_occident_lvl_4">Noblemen</label>
+									</div>
+								</div>
+							</div>
+						</section>
+						<section data-pop-class="orient">
+							<h6>Orient</h6>
+							<div class="mdl-grid">
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+									<label class="pop-icon" for="pop_orient_lvl_1"><img src="img/1404/pop_nomad.png" alt="" /></label>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input pop_count" type="number" class="" id="pop_orient_lvl_1">
+										<label class="mdl-textfield__label" for="pop_orient_lvl_1">Nomads</label>
+									</div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+									<label class="pop-icon" for="pop_orient_lvl_2"><img src="img/1404/pop_envoy.png" alt="" /></label>
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<input class="mdl-textfield__input pop_count" type="number" class="" id="pop_orient_lvl_2">
+										<label class="mdl-textfield__label" for="pop_orient_lvl_2">Envoys</label>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</section>
+				
+				<section id="chains">
+					<h5>Chain details</h5>
+					<div>
+						<section id="chain_occident" data-pop-class="occident">
+							<h6>Occident</h6>
+							<div class="mdl-grid">
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_fish" data-supports="286,200,500,909,1250"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_cider" data-supports="500,340,340,652,1153"></div>
+								</div>
+								
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_spice" data-supports="0,0,500,909,1250"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_linen_garment" data-supports="0,0,500,909,1250"></div>
+									<div class="material mat_hemp chain--level-1" data-ratio="2" data-factory="prod_linen_garment"></div>
+								</div>
+								
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_bread" data-supports="0,0,0,726,1020"></div>
+									<div class="material mat_flour chain--level-1" data-ratio="1" data-factory="prod_bread"></div>
+									<div class="material mat_wheat chain--level-2" data-ratio="2" data-factory="mat_flour"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_beer" data-supports="0,0,0,625,1071"></div>
+									<!--
+										Production (kg/min): 1500
+										Consumption (kg/100 people/min): 240 (patrician), 140 (nobleman)
+										Support: 1500/240*100 = 625 , 1500/140*100 ~= 1071
+									-->
+									<div class="material mat_herb chain--level-1" data-ratio="1" data-factory="prod_beer"></div>
+									<div class="material mat_wheat chain--level-1" data-ratio="1" data-factory="prod_beer"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_leather_jerkin" data-supports="0,0,0,2850,5000"></div>
+									<div class="material mat_salt chain--level-1" data-ratio="0.5" data-factory="prod_leather_jerkin"></div>
+									<div class="material mat_brine chain--level-2" data-ratio="1" data-factory="mat_salt"></div>
+									<div class="material mat_coal chain--level-2" data-ratio="1" data-factory="mat_salt"></div>
+									<div class="material mat_animal_hide chain--level-1" data-ratio="2" data-factory="prod_leather_jerkin"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_book" data-supports="0,0,0,1875,3333"></div>
+									<div class="material mat_indigo chain--level-1" data-ratio="2" data-factory="prod_book"></div>
+									<div class="material mat_paper chain--level-1" data-ratio="0.5" data-factory="prod_book"></div>
+									<div class="material mat_wood chain--level-2" data-ratio="2" data-factory="mat_paper"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_candlestick" data-supports="0,0,0,2500,3333"></div>
+									<!--
+										Production (kg/min): 2000
+										Consumption (kg/100 people/min): 80 (patrician), 60 (nobleman)
+										Support: 2000/80*100 = 2500 , 2000/60*100 ~= 3333
+									-->
+									<div class="material mat_candle chain--level-1" data-ratio="1.5" data-factory="prod_candlestick"></div>
+									<div class="material mat_beeswax chain--level-2" data-ratio="2" data-factory="mat_candle"></div>
+									<div class="material mat_hemp chain--level-2" data-ratio="1" data-factory="mat_candle"></div>
+									<div class="material mat_brass chain--level-1" data-ratio="0.75" data-factory="prod_candlestick"></div>
+									<div class="material mat_copper_ore chain--level-2" data-ratio="1" data-factory="mat_brass"></div>
+									<div class="material mat_coal chain--level-2" data-ratio="0.6666666666" data-factory="mat_brass"></div>
+								</div>
+								
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_meat" data-supports="0,0,0,0,726"></div>
+									<div class="material mat_cattle chain--level-1" data-ratio="2" data-factory="prod_meat"></div>
+									<div class="material mat_salt chain--level-1" data-ratio="0.5" data-factory="prod_meat"></div>
+									<div class="material mat_brine chain--level-2" data-ratio="1" data-factory="mat_salt"></div>
+									<div class="material mat_coal chain--level-2" data-ratio="1" data-factory="mat_salt"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_wine" data-supports="0,0,0,0,1000"></div>
+									<!--
+										Production (kg/min): 2000
+										Consumption (kg/100 people/min): 200
+										Support: 2000/200*100 = 1000
+									-->
+									<div class="material mat_grape chain--level-1" data-ratio="3" data-factory="prod_wine"></div>
+									<div class="material mat_barrel chain--level-1" data-ratio="1" data-factory="prod_wine"></div>
+									<div class="material mat_wood chain--level-2" data-ratio="1" data-factory="mat_barrel"></div>
+									<div class="material mat_iron chain--level-2" data-ratio="0.5" data-factory="mat_barrel"></div>
+									<div class="material mat_iron_ore chain--level-3" data-ratio="1" data-factory="mat_iron"></div>
+									<div class="material mat_coal chain--level-3" data-ratio="1" data-factory="mat_iron"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_fur_coat" data-supports="0,0,0,0,1562"></div>
+									<!--
+										Production (kg/min): 2500
+										Consumption (kg/100 people/min): 160
+										Support: 2500/160*100 ~= 1562
+									-->
+									<div class="material mat_salt chain--level-1" data-ratio="0.3333333333" data-factory="prod_fur_coat"></div>
+									<div class="material mat_brine chain--level-2" data-ratio="1" data-factory="mat_salt"></div>
+									<div class="material mat_coal chain--level-2" data-ratio="1" data-factory="mat_salt"></div>
+									<div class="material mat_fur chain--level-1" data-ratio="1" data-factory="prod_fur_coat"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_brocade_robe" data-supports="0,0,0,0,2112"></div>
+									<div class="material mat_silk chain--level-1" data-ratio="2" data-factory="prod_brocade_robe"></div>
+									<div class="material mat_gold chain--level-1" data-ratio="1" data-factory="prod_brocade_robe"></div>
+									<div class="material mat_coal chain--level-2" data-ratio="0.75" data-factory="mat_gold"></div>
+									<div class="material mat_gold_ore chain--level-2" data-ratio="1" data-factory="mat_gold"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_glasses" data-supports="0,0,0,0,1709"></div>
+									<!--
+										Production (kg/min): 2000
+										Consumption (kg/100 people/min): 117
+										Support: 2000/117*100 ~= 1709
+									-->
+									<div class="material mat_quartz chain--level-1" data-ratio="0.75" data-factory="prod_glasses"></div>
+									<div class="material mat_brass chain--level-1" data-ratio="0.75" data-factory="prod_glasses"></div>
+									<div class="material mat_copper_ore chain--level-2" data-ratio="1" data-factory="mat_brass"></div>
+									<div class="material mat_coal chain--level-2" data-ratio="0.6666666666" data-factory="mat_brass"></div>
+								</div>
+							</div>
+						</section>
+						
+						<section id="chain_orient" data-pop-class="orient">
+							<h6>Orient</h6>
+							<div class="mdl-grid">
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_date" data-supports="450,600"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_milk" data-supports="450,600"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_carpet" data-supports="900,1500"></div>
+									<div class="material mat_silk chain--level-1" data-ratio="1" data-factory="prod_carpet"></div>
+									<div class="material mat_indigo chain--level-1" data-ratio="1" data-factory="prod_carpet"></div>
+								</div>
+								
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_marzipan" data-supports="0,2453"></div>
+									<!--
+										Production (kg/min): 4000
+										Consumption (kg/100 people/min): 163
+										Support: 4000/163*100 ~= 2453
+									-->
+									<div class="material mat_almond chain--level-1" data-ratio="2" data-factory="prod_marzipan"></div>
+									<div class="material mat_sugar chain--level-1" data-ratio="1" data-factory="prod_marzipan"></div>
+									<div class="material mat_sugar_cane chain--level-2" data-ratio="2" data-factory="mat_sugar"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_coffee" data-supports="0,1000"></div>
+									<!--
+										Production (kg/min): 1000
+										Consumption (kg/100 people/min): 100
+										Support: 1000/100*100 = 1000
+									-->
+									<div class="material mat_coffee_bean chain--level-1" data-ratio="2" data-factory="prod_coffee"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_pearl_necklace" data-supports="0,1040"></div>
+									<div class="material mat_pearl chain--level-1" data-ratio="1" data-factory="prod_pearl_necklace"></div>
+								</div>
+								<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet chain">
+									<div class="product prod_perfume" data-supports="0,1250"></div>
+									<!--
+										Production (kg/min): 1000
+										Consumption (kg/100 people/min): 80
+										Support: 1000/80*100 = 1250
+									-->
+									<div class="material mat_rose_oil chain--level-1" data-ratio="3" data-factory="prod_perfume"></div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</section>
+				
+				<!--
+					TODO: summary
+					TODO: ideal production chains for other goods (like tools)
+					TODO: equivalences (e.g. 1 mine = 2 rotary excavators)
+				-->
+			</main>
+		</div>
+		<script type="text/javascript">
+$(function() {
+	anno.init('1404');
+});
+		</script>
+	</body>
+</html>
