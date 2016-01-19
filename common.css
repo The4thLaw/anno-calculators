@@ -49,3 +49,26 @@ h5, h6 {
 	display: inline;
 	width: auto;
 }
+
+#index-links {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+#index-links a {
+	max-width: 15em;
+	text-decoration: none;
+}
+
+#index-link--anno1404 .mdl-card__title {
+	background: rgb(255,152,0);
+	color: white;
+}
+
+#index-link--anno2070 .mdl-card__title {
+	background: rgb(63,81,181);
+	color: white;
+}
+
