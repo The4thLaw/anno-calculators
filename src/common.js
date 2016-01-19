@@ -256,6 +256,22 @@ var anno = {
 		anno.compute();
 	},
 	
+	deleteCity: function () {
+		'use strict';
+		
+		var cityName, fullData;
+		
+		cityName = $('#save-list').val();
+		fullData = Cookies.getJSON(anno.cookieName);
+		
+		delete fullData[cityName];
+		
+		Cookies.set(anno.cookieName, fullData, { expires: 365 });
+		
+		// Refresh save list
+		anno.fillSaveList();
+	},
+	
 	fillSaveList: function () {
 		'use strict';
 		
@@ -285,6 +301,7 @@ var anno = {
 		// Initialise load/save buttons
 		$('#btn-save').click(anno.saveCity);
 		$('#btn-load').click(anno.loadCity);
+		$('#btn-delete').click(anno.deleteCity);
 		
 		// Initialise dialog
 		anno.saveDialog = $('#save-dialog').dialog({
