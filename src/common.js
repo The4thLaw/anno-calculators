@@ -5,6 +5,7 @@
 var anno = {
 	computationTimer: null,
 	cookieName: null,
+	saveDialog: null,
 	
 	getPopulationClass: function ($element) {
 		'use strict';
@@ -195,13 +196,19 @@ var anno = {
 			efficiencies: efficiencies
 		};
 	},
-
+	
 	saveCity: function () {
+		'use strict';
+		
+		anno.saveDialog.dialog('open');
+	},
+
+	doSaveCity: function () {
 		'use strict';
 
 		var cityName, data = {};
 
-		cityName = prompt('City or game name:');
+		cityName = $('#save-dialog-name').val();
 
 		// Restore previous data
 		data = Cookies.getJSON(anno.cookieName);
@@ -215,6 +222,9 @@ var anno = {
 		
 		// Refresh save list
 		anno.fillSaveList();
+		
+		// Hide dialog
+		anno.saveDialog.dialog('close');
 	},
 
 	loadCity: function () {
@@ -276,6 +286,25 @@ var anno = {
 		$('#btn-save').click(anno.saveCity);
 		$('#btn-load').click(anno.loadCity);
 		
+		// Initialise dialog
+		anno.saveDialog = $('#save-dialog').dialog({
+			autoOpen: false,
+			modal: true,
+			buttons: {
+				'Save': anno.doSaveCity,
+				'Cancel': function () {
+					anno.saveDialog.dialog('close');
+				}
+			},
+			close: function () {
+				$('#save-dialog form')[0].reset();
+			}
+		});
+		$('#save-dialog form').on('submit', function (event) {
+			event.preventDefault();
+			anno.doSaveCity();
+		});
+		
 		// Bind change handlers
 		$('input.pop_count, input.efficiency').change(anno.compute);
 		$('input.pop_count, input.efficiency').keyup(anno.compute);
@@ -299,3 +328,4 @@ var anno = {
 	}
 
 };
+

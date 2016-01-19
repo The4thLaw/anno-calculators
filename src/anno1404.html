@@ -6,13 +6,26 @@
 		<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.orange-yellow.min.css" />
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/humanity/jquery-ui.css"> 
 		<link rel="stylesheet" href="common.css"> 
 		<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js" async></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.4/js.cookie.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<!--
+			TODO: delete action
+		-->
 		<script src="common.js"></script>
 	</head>
 	<body>
+		<div id="save-dialog" title="Save your game">
+			<form>
+				<label>
+					City name:<br>
+					<input type="text" id="save-dialog-name">
+				</label>
+			</form>
+		</div>
 		<div class="mdl-layout mdl-js-layout">
 			<header class="mdl-layout__header">
 				<div class="mdl-layout__header-row">
@@ -288,3 +301,4 @@ $(function() {
 		</script>
 	</body>
 </html>
+
