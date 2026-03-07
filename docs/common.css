@@ -3,6 +3,10 @@ html, body {
 	background: #fff;
 }
 
+header {
+	text-align: center;
+}
+
 main {
 	padding: 8px;
 }
@@ -62,16 +66,21 @@ h5, h6 {
 }
 
 #index-links a {
-	max-width: 15em;
+	max-width: 20em;
 	text-decoration: none;
 }
 
-#index-link--anno1404 .mdl-card__title {
+#index-links h2 {
+	border-top-left-radius: var(--bulma-card-radius);
+	border-top-right-radius: var(--bulma-card-radius);
+}
+
+#index-link--anno1404 h2 {
 	background: rgb(255,152,0);
 	color: white;
 }
 
-#index-link--anno2070 .mdl-card__title {
+#index-link--anno2070 h2 {
 	background: rgb(63,81,181);
 	color: white;
 }
