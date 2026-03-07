@@ -80,6 +80,11 @@ h5, h6 {
 	color: white;
 }
 
+#index-link--anno1800 h2 {
+	background: rgb(167, 82, 8);
+	color: white;
+}
+
 #index-link--anno2070 h2 {
 	background: rgb(63,81,181);
 	color: white;
