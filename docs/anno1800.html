@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Anno 1800 Calculator</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css" >
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/humanity/jquery-ui.css"> 
+		<link rel="stylesheet" href="common.css"> 
+		<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js" async></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.4/js.cookie.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<script src="common.js"></script>
+	</head>
+	<body class="anno-1800">
+		<div id="save-dialog" title="Save your game">
+			<form>
+				<label>
+					City name:<br>
+					<input type="text" id="save-dialog-name">
+				</label>
+			</form>
+		</div>
+		<header>
+			<h1 class="title">Anno 1800 Calculator</h1>
+		</header>
+		<main>
+			<section>
+				<h2 class="title is-4">Options</h2>
+				<div>
+					<div class="opt-save-buttons">
+						<div class="select">
+							<select id="save-list"></select>
+						</div>
+						<button id="btn-load" class="button"><span class="icon"><i class="material-icons">file_upload</i></span><span>Load</span></button>
+						<button id="btn-save" class="button"><span class="icon"><i class="material-icons">file_download</i></span><span>Save</span></button>
+						<button id="btn-delete" class="button"><span class="icon"><i class="material-icons">delete</i></span><span>Delete</span></button>
+					</div>
+					<div>
+						<label class="checkbox">
+							<input type="checkbox" id="opt-round-counts" checked />
+							Round requirements
+						</label>
+					</div>
+				</div>
+			</section>
+				
+			<section id="population">
+				<h2 class="title is-4">Population</h2>
+				<div>
+					<section data-pop-class="eco">
+						<h3 class="title is-5">Old World</h3>
+						<div class="grid">
+							<div class="cell">
+								<label class="label" for="pop_old_world_lvl_1">
+									<div class="pop-icon">
+										<img src="img/1800/pop_old_world_lvl_1.webp" alt="" />
+									</div>
+									<span>Farmers</span>
+								</label>
+								<input class="input pop_count" type="number" id="pop_old_world_lvl_1">
+							</div>
+							<div class="cell">
+								<label class="label" for="pop_old_world_lvl_2">
+									<div class="pop-icon">
+										<img src="img/1800/pop_old_world_lvl_2.webp" alt="" />
+									</div>
+									<span>Workers</span>
+								</label>
+								<input class="input pop_count" type="number" id="pop_old_world_lvl_2">
+							</div>
+							<div class="cell">
+								<label class="label" for="pop_old_world_lvl_3">
+									<div class="pop-icon">
+										<img src="img/1800/pop_old_world_lvl_3.webp" alt="" />
+									</div>
+									<span>Artisans</span>
+								</label>
+								<input class="input pop_count" type="number" id="pop_old_world_lvl_3">
+							</div>
+							<div class="cell">
+								<label class="label" for="pop_old_world_lvl_4">
+									<div class="pop-icon">
+										<img src="img/1800/pop_old_world_lvl_4.webp" alt="" />
+									</div>
+									<span>Engineers</span>
+								</label>
+								<input class="input pop_count" type="number" id="pop_old_world_lvl_4">
+							</div>
+							<div class="cell">
+								<label class="label" for="pop_old_world_lvl_5">
+									<div class="pop-icon">
+										<img src="img/1800/pop_old_world_lvl_5.webp" alt="" />
+									</div>
+									<span>Investors</span>
+								</label>
+								<input class="input pop_count" type="number" id="pop_old_world_lvl_5">
+							</div>
+						</div>
+					</section>
+				</div>
+			</section>
+			
+		</main>
+		<script type="text/javascript">
+$(function() {
+	anno.init('1800');
+});
+		</script>
+	</body>
+</html>
+
