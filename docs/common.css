@@ -8,28 +8,47 @@ header {
 }
 
 main {
-	padding: 8px;
+	padding: 0.5em;
 }
 
-label.pop-icon {
-	display: block;
-	width: 100%;
+#population, #chains {
+	margin-top: 2em;
+
+	& img {
+		max-height: 40px;
+	}
 }
-#population .mdl-cell {
-	text-align: center;
+
+#population label.label {
+	display: flex;
+}
+
+#population label.label span {
+	flex: 1;
+	align-content: center;
+	margin-left: 1em;
+}
+
+.cell.chain {
+	min-width: 10em;
 }
 
 h5, h6 {
 	cursor: pointer;
 }
 
-.mdl-textfield__input.efficiency {
+.input.efficiency {
 	display: inline;
-	width: 4em;
+	width: 5.5em;
 }
 
 .chain {
 	margin-bottom: 2em;
+}
+
+.product, .material {
+	display: flex;
+	align-items: center;
 }
 		
 .chain--level-1 {
@@ -51,11 +70,6 @@ h5, h6 {
 .opt-save-buttons {
 	margin-bottom: 2em;
 	word-spacing: 1.5em;
-}
-
-#save-list {
-	display: inline;
-	width: auto;
 }
 
 #index-links {

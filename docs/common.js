@@ -66,7 +66,7 @@ var anno = {
 
 			$(this).append('<span class="count--rounded">0</span><span class="count">0</span>');
 			if (!$(this).is('.summary')) {
-				$(this).append(' @ <input class="mdl-textfield__input efficiency" type="number" value="100">%');
+				$(this).append(' @ <input class="input efficiency" type="number" value="100">%');
 			}
 		});
 
