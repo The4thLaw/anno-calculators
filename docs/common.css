@@ -33,7 +33,7 @@ main {
 	min-width: 10em;
 }
 
-h5, h6 {
+h2, h3 {
 	cursor: pointer;
 }
 
@@ -89,17 +89,20 @@ h5, h6 {
 	border-top-right-radius: var(--bulma-card-radius);
 }
 
-#index-link--anno1404 h2 {
+#index-link--anno1404 h2,
+.anno-1404 header h1 {
 	background: rgb(255,152,0);
 	color: white;
 }
 
-#index-link--anno1800 h2 {
+#index-link--anno1800 h2,
+.anno-1800 header h1  {
 	background: rgb(167, 82, 8);
 	color: white;
 }
 
-#index-link--anno2070 h2 {
+#index-link--anno2070 h2,
+.anno-2070 header h1  {
 	background: rgb(63,81,181);
 	color: white;
 }
