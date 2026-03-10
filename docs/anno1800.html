@@ -7,7 +7,6 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
 		<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/humanity/jquery-ui.css"> 
 		<link rel="stylesheet" href="common.css"> 
-		<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js" async></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.4/js.cookie.min.js"></script>
 		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
@@ -48,8 +47,9 @@
 				
 			<section id="population">
 				<h2 class="title is-4">Population</h2>
+				<p>Consumption in Anno 1800 is computed in number of residences, not people.</p>
 				<div>
-					<section data-pop-class="eco">
+					<section data-pop-class="old_world">
 						<h3 class="title is-5">Old World</h3>
 						<div class="grid">
 							<div class="cell">
@@ -101,11 +101,51 @@
 					</section>
 				</div>
 			</section>
+
+			<section id="chains">
+				<h2 class="title is-4">Chain details</h2>
+				<div>
+					<section id="chain_eco" data-pop-class="old_world">
+						<h3 class="title is-5">Old World</h3>
+						<div class="grid is-col-min-12">
+							<div class="cell chain">
+								<div class="product prod_fish" data-supports="80,40,0,0,0"></div>
+							</div>
+							<div class="cell chain">
+								<div class="product prod_work_clothes" data-supports="65,32.5,0,0,0"></div>
+								<div class="material mat_wool chain--level-1" data-ratio="1" data-factory="prod_work_clothes"></div>
+							</div>
+							<div class="cell chain">
+								<div class="product prod_schnapps" data-supports="60,30,0,0,0"></div>
+								<div class="material mat_potato chain--level-1" data-ratio="1" data-factory="prod_schnapps"></div>
+							</div>
+							<div class="cell chain">
+								<div class="product mat_flour" data-supports="83.34,0,0,0,0"></div>
+								<div class="material mat_grain chain--level-1" data-ratio="2" data-factory="mat_flour"></div>
+							</div>
+							<!-- TODO: sugar, jam, soap, herbs, hibiscus petals, sausages -->
+							 <div class="cell chain">
+								<div class="product prod_bread" data-supports="0,55,27.5,0,0"></div>
+								<div class="material mat_flour chain--level-1" data-ratio="0.5" data-factory="prod_bread"></div>
+								<div class="material mat_grain chain--level-2" data-ratio="2" data-factory="mat_flour"></div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</section>
+
+			<section id="summaries">
+				<h2 class="title is-4">Requirements summary</h2>
+				<div class="grid">
+					<!-- TODO -->
+					<div class="cell product" data-sum-of="mat_flour"></div>
+				</div>
+			</section>
 			
 		</main>
 		<script type="text/javascript">
 $(function() {
-	anno.init('1800');
+	anno.init('1800', 'webp');
 });
 		</script>
 	</body>

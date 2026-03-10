@@ -6,6 +6,7 @@ var anno = {
 	computationTimer: null,
 	cookieName: null,
 	saveDialog: null,
+	imgExt: null,
 	
 	getPopulationClass: function ($element) {
 		'use strict';
@@ -62,7 +63,7 @@ var anno = {
 		$('#summaries .product, #summaries .material').addClass('summary');
 
 		$('.product, .material').each(function () {
-			$(this).append('<img src="img/' + game + '/' + anno.getProductOrMaterialClass(this) + '.png" >');
+			$(this).append(`<img src="img/${game}/${anno.getProductOrMaterialClass(this)}.${anno.imgExt}" >`);
 
 			$(this).append('<span class="count--rounded">0</span><span class="count">0</span>');
 			if (!$(this).is('.summary')) {
@@ -281,19 +282,22 @@ var anno = {
 		$select.html('');
 		
 		data = Cookies.getJSON(anno.cookieName);
-		$.each(data, function (key) {
-			$select.append('<option value="' + key + '">' + key + '</option>');
-		});
+		if (data) {
+			$.each(data, function (key) {
+				$select.append('<option value="' + key + '">' + key + '</option>');
+			});
+		}
 	},
 	
-	init: function (game) {
+	init: function (game, imgExt) {
 		'use strict';
 		
 		anno.cookieName = 'anno' + game;
+		anno.imgExt = imgExt;
 		anno.generateMarkup(game);
 		
 		// Initialise clickable headers
-		$('h5, h6').click(function () {
+		$('h2, h3').click(function () {
 			var sectionContent = $('+ div', this);
 			sectionContent.slideToggle();
 		});
@@ -342,6 +346,9 @@ var anno = {
 		
 		// Initialise save list
 		anno.fillSaveList();
+
+		// Compute with available data
+		anno.doCompute()
 	}
 
 };
