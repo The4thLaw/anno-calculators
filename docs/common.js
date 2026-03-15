@@ -55,6 +55,16 @@ var anno = {
 	generateMarkup: function (game) {
 		'use strict';
 
+		// Fill the summary
+		$('.product, .material')
+			.toArray()
+			.flatMap(e => [...e.classList])
+			.filter(c => /^(prod|mat)_.*/.test(c))
+			.forEach(c => {
+				const cellClass = /^prod/.test(c) ? 'product' : 'material'
+				$('#summaries .grid').append(`<div class="cell ${cellClass}" data-sum-of="${c}"></div>`)
+			})
+
 		$('[data-sum-of]').each(function () {
 			$(this).addClass($(this).data('sum-of'));
 		});
@@ -295,7 +305,7 @@ var anno = {
 		anno.cookieName = 'anno' + game;
 		anno.imgExt = imgExt;
 		anno.generateMarkup(game);
-		
+
 		// Initialise clickable headers
 		$('h2, h3').click(function () {
 			var sectionContent = $('+ div', this);
@@ -306,7 +316,7 @@ var anno = {
 		$('#btn-save').click(anno.saveCity);
 		$('#btn-load').click(anno.loadCity);
 		$('#btn-delete').click(anno.deleteCity);
-		
+
 		// Initialise dialog
 		anno.saveDialog = $('#save-dialog').dialog({
 			autoOpen: false,
@@ -343,7 +353,7 @@ var anno = {
 			}
 		});
 		$('#opt-round-counts').change();
-		
+
 		// Initialise save list
 		anno.fillSaveList();
 
