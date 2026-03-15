@@ -105,9 +105,10 @@
 			<section id="chains">
 				<h2 class="title is-4">Chain details</h2>
 				<div>
-					<section id="chain_eco" data-pop-class="old_world">
+					<section id="chain_old_world" data-pop-class="old_world">
 						<h3 class="title is-5">Old World</h3>
 						<div class="grid is-col-min-12">
+							<!-- Level 1: farmers -->
 							<div class="cell chain">
 								<div class="product prod_fish" data-supports="80,40,0,0,0"></div>
 							</div>
@@ -115,20 +116,57 @@
 								<div class="product prod_work_clothes" data-supports="65,32.5,0,0,0"></div>
 								<div class="material mat_wool chain--level-1" data-ratio="1" data-factory="prod_work_clothes"></div>
 							</div>
+
 							<div class="cell chain">
 								<div class="product prod_schnapps" data-supports="60,30,0,0,0"></div>
 								<div class="material mat_potato chain--level-1" data-ratio="1" data-factory="prod_schnapps"></div>
 							</div>
+
 							<div class="cell chain">
-								<div class="product mat_flour" data-supports="83.34,0,0,0,0"></div>
+								<div class="product mat_flour" data-supports="41.67,0,0,0,0"></div>
 								<div class="material mat_grain chain--level-1" data-ratio="2" data-factory="mat_flour"></div>
 							</div>
-							<!-- TODO: sugar, jam, soap, herbs, hibiscus petals, sausages -->
-							 <div class="cell chain">
+							<div class="cell chain">
+								<div class="product mat_sugar" data-supports="83.33,0,0,0,0"></div>
+								<div class="material mat_sugar_cane chain--level-1" data-ratio="1" data-factory="mat_sugar"></div>
+							</div>
+							<div class="cell chain">
+								<div class="product prod_jam" data-supports="50,0,0,0,0"></div>
+							</div>
+							<div class="cell chain">
+								<div class="product prod_soap" data-supports="285.71,240,120"></div>
+								<div class="material mat_tallow chain--level-1" data-ratio="2" data-factory="prod_soap"></div>
+								<div class="material mat_pigs chain--level-2" data-ratio="1" data-factory="mat_tallow"></div>
+							</div>
+							<div class="cell chain">
+								<div class="product mat_herbs" data-supports="58.82,0,0,0,0"></div>
+							</div>
+							<div class="cell chain">
+								<div class="product mat_hibiscus_petals" data-supports="100,0,0,0,0"></div>
+							</div>
+							<!-- Level 2: workers -->
+							<div class="cell chain">
+								<div class="product prod_sausage" data-supports="0,50,25,0,0"></div>
+								<div class="material mat_pigs chain--level-1" data-ratio="1" data-factory="prod_sausage"></div>
+							</div>
+							<div class="cell chain">
 								<div class="product prod_bread" data-supports="0,55,27.5,0,0"></div>
 								<div class="material mat_flour chain--level-1" data-ratio="0.5" data-factory="prod_bread"></div>
 								<div class="material mat_grain chain--level-2" data-ratio="2" data-factory="mat_flour"></div>
 							</div>
+							<div class="cell chain">
+								<div class="product prod_beer" data-supports="0,65,32.5,0,0"></div>
+								<div class="material mat_malt chain--level-1" data-ratio="0.5" data-factory="prod_beer"></div>
+								<div class="material mat_grain chain--level-2" data-ratio="2" data-factory="mat_malt"></div>
+								<div class="material mat_hops chain--level-1" data-ratio="1.5" data-factory="prod_beer"></div>
+							</div>
+
+							<div class="cell chain">
+								<div class="product prod_rum" data-supports="0,50,35,17.5,0"></div>
+								<div class="material mat_sugar_cane chain--level-1" data-ratio="1" data-factory="prod_rum"></div>
+								<div class="material mat_wood chain--level-1" data-ratio="0.5" data-factory="prod_rum"></div>
+							</div>
+							<!-- TODO: penny fathings, hot sauce, beef, soccer balls, clay pipes -->
 						</div>
 					</section>
 				</div>
