@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- TODO: take visual inspiration from https://suhrmann.github.io/Anno-1800-Calculator/#/demands ? -->
+		<!-- TODO: migrate to vue to use computed properties ? Directly coded, not loaded from a YAML or anything
+		Make a POC using farmers and workers -->
 		<title>Anno 1800 Calculator</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css" >
@@ -165,6 +168,23 @@
 								<div class="product prod_rum" data-supports="0,50,35,17.5,0"></div>
 								<div class="material mat_sugar_cane chain--level-1" data-ratio="1" data-factory="prod_rum"></div>
 								<div class="material mat_wood chain--level-1" data-ratio="0.5" data-factory="prod_rum"></div>
+							</div>
+
+							<div class="cell chain">
+								<!-- workers consumption:
+								 	0.0001333333 ton per residence per second
+									20 workers per residence
+									X is number of residences we want to sustain
+									F is the number of factories (1)
+									factory produces 2 / min or, or 1/30 per second
+									0.0001333333 * 20 * X = 1 * 1/30 
+									X = 0.0001333333 * 20 / (1/30)
+								-->
+								<div class="product prod_high_wheeler" data-supports="0,125,0,80,40"></div>
+								<div class="material mat_caoutchouc chain--level-1" data-ratio="2" data-factory="prod_high_wheeler"></div>
+								<div class="material mat_steel chain--level-1" data-ratio="1" data-factory="prod_high_wheeler"></div>
+								<div class="material mat_coal chain--level-2" data-ratio="0.5" data-factory="mat_steel"></div>
+								<div class="material mat_iron chain--level-2" data-ratio="0.5" data-factory="mat_steel"></div>
 							</div>
 							<!-- TODO: penny fathings, hot sauce, beef, soccer balls, clay pipes -->
 						</div>
