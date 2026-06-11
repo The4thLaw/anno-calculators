@@ -1,14 +1,16 @@
 import { ref } from 'vue'
 
+// TODO: support chain categories
+
 class Game {
 	readonly id: string
-  readonly imgExt: string
+	readonly imgExt: string
 	readonly populationCategories: PopulationCategory[] = []
 	readonly chains: Chain[] = []
 
 	constructor(id: string, imgExt: string) {
 		this.id = id
-    this.imgExt = imgExt
+		this.imgExt = imgExt
 	}
 
 	addPopulationCategory(pc: PopulationCategory) {
@@ -107,13 +109,13 @@ popOldWorld.population.push(owInvestors)
 }
 
 {
-  const clothesP = new Product('prod_work_clothes')
-  const clothesC = new Chain(clothesP)
-  const woolP = new IntermediateProduct('mat_wool', clothesP, 1)
+	const clothesP = new Product('prod_work_clothes')
+	const clothesC = new Chain(clothesP)
+	const woolP = new IntermediateProduct('mat_wool', clothesP, 1)
 	clothesC.steps.push(woolP)
 
-  clothesC.addSupport(new PopulationSupport(owFarmers, 65))
-  clothesC.addSupport(new PopulationSupport(owWorkers, 32.5))
+	clothesC.addSupport(new PopulationSupport(owFarmers, 65))
+	clothesC.addSupport(new PopulationSupport(owWorkers, 32.5))
 	anno1800.value.chains.push(clothesC)
 }
 
@@ -162,7 +164,7 @@ popOldWorld.population.push(owInvestors)
 	breadC.addSupport(new PopulationSupport(owWorkers, 55))
 	anno1800.value.chains.push(breadC)
 }
-              /*
+/*
 							<div class="cell chain">
 								<div class="product prod_beer" data-supports="0,65,32.5,0,0"></div>
 								<div class="material mat_malt chain--level-1" data-ratio="0.5" data-factory="prod_beer"></div>
