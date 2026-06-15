@@ -1,47 +1,54 @@
-	console.debug(
-		[...document.querySelectorAll('.chain')]
-			.map((ce) => {
-				const snakeToCamel = (str) =>
-					str
-						.toLowerCase()
-						.replace(/([-\_][a-z])/g, (group) =>
-							group.toUpperCase().replace('-', '').replace('\_', ''),
-						)
+# Migration
 
-				const chainId = ce.querySelector(':scope .product').classList[1]
-				const mainProdName = snakeToCamel(chainId)
+Migrating data from the old HTML calculators can be assisted with the following code.
 
-				const intermediate = [...(ce.querySelectorAll(':scope .material') ?? [])]
-						.map((ie) => {
-							const intermediateId = ie.classList[1]
-							const intermediateName = snakeToCamel(intermediateId)
-							const ratio = ie.dataset['ratio']
-							const dependent = snakeToCamel(ie.dataset['factory'])
+```js
+console.debug(
+	[...document.querySelectorAll('.chain')]
+		.map((ce) => {
+			const snakeToCamel = (str) =>
+				str
+					.toLowerCase()
+					.replace(/([-\_][a-z])/g, (group) =>
+						group.toUpperCase().replace('-', '').replace('\_', ''),
+					)
 
-							return `\tconst ${intermediateName} = new IntermediateProduct('${intermediateId}', ${dependent}, ${ratio})
-	\t${mainProdName}Chain.steps.push(${intermediateName})
+			const product = ce.querySelector(':scope .product')
+			const chainId = product.classList[1]
+			const mainProdName = snakeToCamel(chainId)
+
+			const intermediate = [...(ce.querySelectorAll(':scope .material') ?? [])]
+				.map((ie) => {
+					const intermediateId = ie.classList[1]
+					const intermediateName = snakeToCamel(intermediateId)
+					const ratio = ie.dataset['ratio']
+					const dependent = snakeToCamel(ie.dataset['factory'])
+
+					return `\tconst ${intermediateName} = new IntermediateProduct('${intermediateId}', ${dependent}, ${ratio})
+	${mainProdName}Chain.steps.push(${intermediateName})
 	`
-						})
-						.join('\n')
+				})
+				.join('\n')
 
-				return `{
-	\tconst ${mainProdName} = new Product('${chainId}')
-	\tconst ${mainProdName}Chain = new Chain(${mainProdName})
+			const popSupports = []
+			product.dataset['supports']
+				.split(',')
+				.forEach((v, k) => {
+					if (v > 0) {
+						popSupports.push(`\t${mainProdName}Chain.addSupport(new PopulationSupport(popCat${k+1}, ${v}))`)
+					}
+				})
 
-	${intermediate}
+			return `{
+	const ${mainProdName} = new Product('${chainId}')
+	const ${mainProdName}Chain = new Chain(${mainProdName})
+${intermediate}
+${popSupports.join('\n')}
 
-	// TODO: supports for the chain
-
-	\tanno1800.value.chains.push(${mainProdName}Chain)
-	}
+	anno1800.value.chains.push(${mainProdName}Chain)
+}
 	`
-			})
-			.join('\n'),
-	)
-
-	/*
-		const flourP = new IntermediateProduct('mat_flour', breadP, 0.5)
-		breadC.steps.push(flourP)
-		const grainP = new IntermediateProduct('mat_grain', flourP, 2)
-		breadC.steps.push(grainP)
-	*/
+		})
+		.join('\n'),
+)
+```
