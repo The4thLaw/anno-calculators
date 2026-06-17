@@ -5,7 +5,7 @@ export class Game {
 	readonly name: string
 	readonly imgExt: string
 	readonly populationCategories: PopulationCategory[] = []
-	readonly chains: Chain[] = []
+	readonly chainCategories: ChainCategory[] = []
 
 	constructor(id: string, name: string, imgExt: string) {
 		this.id = id
@@ -45,6 +45,15 @@ export class PopulationSupport {
 	constructor(population: Population, limit: number) {
 		this.population = population
 		this.limit = limit
+	}
+}
+
+export class ChainCategory {
+	readonly name: string
+	chains: Chain[] = []
+
+	constructor(name: string) {
+		this.name = name
 	}
 }
 
