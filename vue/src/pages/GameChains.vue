@@ -15,14 +15,16 @@
 				<h1 class="title is-4">Population</h1>
 				<section v-for="cat of game.populationCategories" :key="cat.name">
 					<h2 class="title is-5">{{ cat.name }}</h2>
-					<div class="grid">
-						<div v-for="pop in cat.population" :key="pop.id" class="card cell population">
-							<div class="card-content">
-								<label class="label" :for="pop.id">
-									<img :src="`${baseUrl}img/${game.id}/${pop.id}.${game.imgExt}`" />
-									{{ pop.name }}
-								</label>
-								<input v-model="pop.count" :id="pop.id" class="input" type="number" />
+					<div class="fixed-grid has-5-cols has-5-cols-widescreen has-3-cols-tablet has-1-cols-mobile">
+						<div class="grid">
+							<div v-for="pop in cat.population" :key="pop.id" class="card cell population">
+								<div class="card-content">
+									<label class="label" :for="pop.id">
+										<img :src="`${baseUrl}img/${game.id}/${pop.id}.${game.imgExt}`" />
+										{{ pop.name }}
+									</label>
+									<input v-model="pop.count" :id="pop.id" class="input" type="number" min="0" />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -31,26 +33,29 @@
 
 			<section>
 				<h1 class="title is-4">Chains</h1>
-				<section class="grid is-col-min-12">
-					<div v-for="chain of game.chains" :key="chain.id" class="cell chain">
-						<div
-							class="product"
-							:class="{'no-need': requirements[chain.id]!.adjusted[chain.finalProduct.id] == 0}"
-						>
-							<img :src="`${baseUrl}img/${game.id}/${chain.finalProduct.id}.${game.imgExt}`" />
-							{{ requirements[chain.id]!.adjusted[chain.finalProduct.id] }} @
-							<input v-model="chain.finalProduct.efficiency" class="input efficiency" type="number" /> %
+				<section v-for="(cc, i) of game.chainCategories" :key="i">
+					<h2 class="title is-5">{{ cc.name }}</h2>
+					<section class="grid is-col-min-12">
+						<div v-for="chain of cc.chains" :key="chain.id" class="cell chain">
+							<div
+								class="product"
+								:class="{'no-need': requirements[chain.id]!.adjusted[chain.finalProduct.id] == 0}"
+							>
+								<img :src="`${baseUrl}img/${game.id}/${chain.finalProduct.id}.${game.imgExt}`" />
+								{{ requirements[chain.id]!.adjusted[chain.finalProduct.id] }} @
+								<input v-model="chain.finalProduct.efficiency" class="input efficiency" type="number" min="1" /> %
+							</div>
+							<div
+								v-for="step of chain.steps" :key="step.id"
+								:style="`margin-left: ${step.level}em`" class="product"
+								:class="{'no-need': requirements[chain.id]!.adjusted[step.id] == 0}"
+							>
+								<img :src="`${baseUrl}img/${game.id}/${step.id}.${game.imgExt}`" />
+								{{ requirements[chain.id]!.adjusted[step.id] }} @
+								<input v-model="step.efficiency" class="input efficiency" type="number" /> %
+							</div>
 						</div>
-						<div
-							v-for="step of chain.steps" :key="step.id"
-							:style="`margin-left: ${step.level}em`" class="product"
-							:class="{'no-need': requirements[chain.id]!.adjusted[step.id] == 0}"
-						>
-							<img :src="`${baseUrl}img/${game.id}/${step.id}.${game.imgExt}`" />
-							{{ requirements[chain.id]!.adjusted[step.id] }} @
-							<input v-model="step.efficiency" class="input efficiency" type="number" /> %
-						</div>
-					</div>
+					</section>
 				</section>
 			</section>
 
@@ -81,32 +86,40 @@ const rounding = ref(false)
 
 interface Requirement {
 	adjusted: Record<string, number>
+	unrounded: Record<string, number>
 	efficiency100: Record<string, number>
+}
+
+const round = (val: number) => {
+	if (rounding.value) {
+		return Math.ceil(val)
+	}
+	return Math.ceil(val * 100) / 100
 }
 
 const requirements = computed(() => {
 	const ret: Record<string, Requirement> = {}
-	for (const c of game.value.chains) {
-		const round = (val: number) => {
-			if (rounding.value) {
-				return Math.ceil(val)
+	for (const cat of game.value.chainCategories) {
+		for (const c of cat.chains) {
+			const allReqs: Record<string, number> = {}
+			const unrounded: Record<string, number> = {}
+			const reqsAt100Eff: Record<string, number> = {}
+			allReqs[c.finalProduct.id] = round(c.supports.map(p => p.population.count / p.limit).reduce((a, b) => a+b, 0) / (c.finalProduct.efficiency / 100))
+			unrounded[c.finalProduct.id] = c.supports.map(p => p.population.count / p.limit).reduce((a, b) => a+b, 0) / (c.finalProduct.efficiency / 100)
+			reqsAt100Eff[c.finalProduct.id] = c.supports.map(p => p.population.count / p.limit).reduce((a, b) => a+b, 0)
+			ret[c.id] = {
+				adjusted: allReqs,
+				unrounded: unrounded,
+				efficiency100: reqsAt100Eff
 			}
-			return Math.ceil(val * 100) / 100
-		}
-		const allReqs: Record<string, number> = {}
-		const reqsAt100Eff: Record<string, number> = {}
-		allReqs[c.finalProduct.id] = round(c.supports.map(p => p.population.count / p.limit).reduce((a, b) => a+b, 0) / (c.finalProduct.efficiency / 100))
-		reqsAt100Eff[c.finalProduct.id] = c.supports.map(p => p.population.count / p.limit).reduce((a, b) => a+b, 0)
-		ret[c.id] = {
-			adjusted: allReqs,
-			efficiency100: reqsAt100Eff
-		}
-		for (const s of c.steps) {
-			const dependencyId = s.dependency.id
-			// We need to make dependency computations based on the efficiency at 100% because an intermediate
-			// factory running at half its efficiency doesn't mean that its dependencies need to work twice as much
-			allReqs[s.id] = round(reqsAt100Eff[dependencyId]! * s.ratio / (s.efficiency / 100))
-			reqsAt100Eff[s.id] = reqsAt100Eff[dependencyId]! * s.ratio
+			for (const s of c.steps) {
+				const dependencyId = s.dependency.id
+				// We need to make dependency computations based on the efficiency at 100% because an intermediate
+				// factory running at half its efficiency doesn't mean that its dependencies need to work twice as much
+				allReqs[s.id] = round(reqsAt100Eff[dependencyId]! * s.ratio / (s.efficiency / 100))
+				unrounded[s.id] = reqsAt100Eff[dependencyId]! * s.ratio / (s.efficiency / 100)
+				reqsAt100Eff[s.id] = reqsAt100Eff[dependencyId]! * s.ratio
+			}
 		}
 	}
 	return ret
@@ -115,14 +128,19 @@ const requirements = computed(() => {
 const requirementSummary = computed(() => {
 	const ret: Record<string, number> = {}
 	for (const cid in requirements.value) {
-		for (const pid in requirements.value[cid]!.adjusted) {
+		for (const pid in requirements.value[cid]!.unrounded) {
 			if (!ret[pid]) {
-				ret[pid] = requirements.value[cid]!.adjusted[pid] ?? 0
+				ret[pid] = requirements.value[cid]!.unrounded[pid] ?? 0
 			} else {
-				ret[pid] += requirements.value[cid]!.adjusted[pid] ?? 0
+				ret[pid] += requirements.value[cid]!.unrounded[pid] ?? 0
 			}
 		}
 	}
+
+	for (const pid in ret) {
+		ret[pid] = round(ret[pid]!)
+	}
+
 	return ret
 })
 
@@ -153,7 +171,7 @@ watch(() => route.params, loadData)
 	}
 
 	main {
-		background-color: #fffffff6;
+		background-color: #fffffff0;
 	}
 
 	img {
