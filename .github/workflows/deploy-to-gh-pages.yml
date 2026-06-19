@@ -1,3 +1,5 @@
+on: push
+name: 🚀 Deploy app on push
 jobs:
   build:
     runs-on: ubuntu-latest
