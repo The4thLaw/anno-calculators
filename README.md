@@ -1,14 +1,48 @@
-# anno-calculators
-Resource calculators for the Anno game series.
+# vue-anno-calculators
 
-Check the deployed version at https://the4thlaw.github.io/anno-calculators/ .
+This template should help get you started developing with Vue 3 in Vite.
 
-# License
-The JavaScript and markup is released under the AGPL v3.0, a copy of which is available in this repository.
+## Recommended IDE Setup
 
-The raw data on resource consumption and production chains was extracted from Fandom wikis. It remains under the terms of [CC-BY-SA](http://www.fandom.com/Licensing).
+[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-The images sourced from the games are included according to what is believed to be fair use:
- - They are of low resolution and unlikely to cause any damage to the original authors
- - They convey a meaning that would not be practically described through textual content alone
- - No other uncopyrighted material could be suitable in the current scope
+## Recommended Browser Setup
+
+- Chromium-based browsers (Chrome, Edge, Brave, etc.):
+  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
+  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
+- Firefox:
+  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
+  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+
+## Type Support for `.vue` Imports in TS
+
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+
+## Customize configuration
+
+See [Vite Configuration Reference](https://vite.dev/config/).
+
+## Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Type-Check, Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
+```
