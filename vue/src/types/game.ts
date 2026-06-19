@@ -30,7 +30,7 @@ export class PopulationCategory {
 export class Population {
 	readonly id: string
 	readonly name: string
-	readonly count = 0
+	count = 0
 
 	constructor(id: string, name: string) {
 		this.id = id
@@ -70,6 +70,10 @@ export class Chain {
 
 	addSupport(support: PopulationSupport) {
 		this.supports.push(support)
+	}
+
+	getAllProducts(): Product[] {
+		return [this.finalProduct, ...this.steps]
 	}
 }
 

@@ -7,10 +7,23 @@
 			{{ game.name }}
 		</header>
 		<main>
-			<!-- TODO: load/save/delete city -->
-			<!-- TODO: styling: banner, population names, icons and cards -->
+			<section>
+				<div class="select mr-4">
+					<select v-model="selectedSave">
+						<option />
+						<option v-for="(save, name) in gameSaves" :key="name">{{name}}</option>
+					</select>
+				</div>
+				<button class="button is-primary mr-4" @click="loadCity">Load</button>
+				<button class="button is-primary mr-4" @click="saveCity">Save</button>
+				<button class="button is-danger" @click="deleteCity">Delete</button>
 
-			round: <input type="checkbox" v-model="rounding" />
+				<label class="checkbox">
+					<input type="checkbox" v-model="rounding" />
+					Round requirements
+				</label>
+			</section>
+
 			<section>
 				<h1 class="title is-4">Population</h1>
 				<section v-for="cat of game.populationCategories" :key="cat.name">
@@ -80,14 +93,27 @@ import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import games from '@/data'
 import type { Game } from '@/types/game'
+import { useStorage } from '@vueuse/core'
+
+const LOCAL_STORAGE_ROOT = 'anno-calculators'
 
 const baseUrl = import.meta.env.BASE_URL
-const rounding = ref(false)
+const rounding = useStorage(`${LOCAL_STORAGE_ROOT}.roundRequirements`, true)
 
 interface Requirement {
 	adjusted: Record<string, number>
 	unrounded: Record<string, number>
 	efficiency100: Record<string, number>
+}
+
+interface SaveGames {
+	saves: Record<string, Record<string, SaveData>>
+}
+
+interface SaveData {
+	name: string
+	population: Record<string, number>
+	efficiency: Record<string, Record<string, Record<string, number>>>
 }
 
 const round = (val: number) => {
@@ -147,13 +173,134 @@ const requirementSummary = computed(() => {
 const route = useRoute()
 const game = ref({} as Game)
 
-function loadData() {
+function loadGameData() {
 	const gameName = route.params.game as string
 	game.value = games[gameName]?.value!
 }
 
-loadData()
-watch(() => route.params, loadData)
+function getSaveData(): SaveData | undefined {
+	const name = prompt('Save name:', selectedSave.value)
+	if (!name) {
+		return undefined
+	}
+
+	const population: Record<string, number> = {}
+	for (const cat of game.value.populationCategories) {
+		for (const pop of cat.population) {
+			population[pop.id] = pop.count
+		}
+	}
+
+	const efficiency: Record<string, Record<string, Record<string, number>>> = {}
+	for (const cat of game.value.chainCategories) {
+		const catEff: Record<string, Record<string, number>> = {}
+		for (const chain of cat.chains) {
+			const chainEff: Record<string, number> = {}
+			for (const product of chain.getAllProducts()) {
+				chainEff[product.id] = product.efficiency
+			}
+			catEff[chain.finalProduct.id] = chainEff
+		}
+		efficiency[cat.name] = catEff
+	}
+
+	const save = {
+		name,
+		population,
+		efficiency
+	}
+	console.debug('Saving:', save)
+	return save
+}
+
+const selectedSave = ref('')
+const saveGames = ref({ saves: {}} as SaveGames)
+function loadSaves(): void {
+	let jsonSaves = localStorage.getItem(`${LOCAL_STORAGE_ROOT}.cities`)
+	if (!jsonSaves) {
+		jsonSaves = '{ "saves": {} }'
+	}
+
+	const parsedSaves = JSON.parse(jsonSaves) as SaveGames
+
+	for (const game in games) {
+		const key = games[game]!.value.name
+		if (!parsedSaves.saves[key]) {
+			parsedSaves.saves[key] = {}
+		}
+	}
+
+	console.debug('Loaded saves:', parsedSaves)
+
+	saveGames.value = parsedSaves
+}
+loadSaves()
+
+const gameSaves = computed(() => saveGames.value.saves[game.value.name]!)
+
+function loadCity(): void {
+	if (!selectedSave.value) {
+		return
+	}
+	const save = gameSaves.value[selectedSave.value]!
+
+	for (const spop in save.population) {
+		for (const cat of game.value.populationCategories) {
+			const found = cat.population.find(p => p.id === spop)
+			if (found) {
+				found.count = save.population[spop]!
+			}
+		}
+	}
+
+	for (const chainCatName in save.efficiency) {
+		const chainCat = game.value.chainCategories.find(c => c.name === chainCatName)
+		if (chainCat) {
+			const saveCatChain = save.efficiency[chainCatName]!
+			for (const chainName in saveCatChain) {
+				const chain = chainCat.chains.find(c => c.finalProduct.id === chainName)
+				if (chain) {
+					const saveChain = saveCatChain[chainName]
+					for (const productName in saveChain) {
+						const product = chain.getAllProducts().find(p => p.id === productName)
+						if (product) {
+							product.efficiency = saveChain[productName]!
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+function saveCity(): void {
+	loadSaves()
+	const data = getSaveData()
+	if (data) {
+		const gameKey = game.value.name
+		if (!saveGames.value.saves[gameKey]) {
+			saveGames.value.saves[gameKey] = {}
+		}
+		saveGames.value.saves[gameKey]![data?.name] = data
+	}
+	writeSaves()
+}
+
+function deleteCity(): void {
+	if (selectedSave.value && confirm('Are you sure you want to delete this city?')) {
+		delete saveGames.value.saves[game.value.name]![selectedSave.value]
+		writeSaves()
+		selectedSave.value = ''
+	}
+}
+
+function writeSaves(): void {
+	localStorage.setItem(`${LOCAL_STORAGE_ROOT}.cities`, JSON.stringify(saveGames.value))
+	loadSaves()
+}
+
+loadGameData()
+watch(() => route.params, loadGameData)
 </script>
 
 <style lang="scss">
@@ -176,6 +323,11 @@ watch(() => route.params, loadData)
 
 	img {
 		max-height: 40px;
+	}
+
+	.checkbox {
+		display: block;
+		margin: 1em 0;
 	}
 
 	.population {
