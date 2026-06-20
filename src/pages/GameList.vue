@@ -37,11 +37,12 @@ const baseUrl = import.meta.env.BASE_URL
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
+	flex-wrap: wrap;
+	gap: 2em;
 
 	a {
 		display: block;
 		width: 15em;
-		border: 1px s
 	}
 
 	.card-image .image {
