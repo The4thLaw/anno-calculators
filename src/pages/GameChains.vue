@@ -315,10 +315,21 @@ watch(() => route.params, loadGameData)
 		font-weight: bold;
 		font-size: 300%;
 		box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 1);
+
+		@media (prefers-color-scheme: dark) {
+			& {
+				background-color: #00000090;
+			}
+		}
 	}
 
 	main {
 		background-color: #fffffff0;
+		@media (prefers-color-scheme: dark) {
+			& {
+				background-color: #000000d0;
+			}
+		}
 	}
 
 	img {
