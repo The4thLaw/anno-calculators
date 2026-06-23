@@ -212,6 +212,135 @@ anno2070.value.chainCategories.push(techChains)
 	tycoonChains.chains.push(prodFishChain)
 }
 
+{
+	const prodLiquor = new Product('prod_liquor')
+	const prodLiquorChain = new Chain(prodLiquor)
+
+	prodLiquorChain.addSupport(new PopulationSupport(tyWorkers, 300))
+	prodLiquorChain.addSupport(new PopulationSupport(tyEmployees, 333))
+	prodLiquorChain.addSupport(new PopulationSupport(tyEngineers, 300))
+	prodLiquorChain.addSupport(new PopulationSupport(tyExecutives, 750))
+
+	tycoonChains.chains.push(prodLiquorChain)
+}
+
+// Employees
+
+{
+	const prodCFood = new Product('prod_convenience_food')
+	const prodCFoodChain = new Chain(prodCFood)
+
+	const matMeat = new IntermediateProduct('mat_meat', prodCFood, 2)
+	prodCFoodChain.steps.push(matMeat)
+
+	const matSuperFlavor = new IntermediateProduct('mat_super_flavor', prodCFood, 1)
+	prodCFoodChain.steps.push(matSuperFlavor)
+
+	prodCFoodChain.addSupport(new PopulationSupport(tyEmployees, 577))
+	prodCFoodChain.addSupport(new PopulationSupport(tyEngineers, 714))
+	prodCFoodChain.addSupport(new PopulationSupport(tyExecutives, 857))
+
+	tycoonChains.chains.push(prodCFoodChain)
+}
+
+{
+	const prodPlastic = new Product('prod_plastic')
+	const prodPlasticChain = new Chain(prodPlastic)
+
+	const matOil = new IntermediateProduct('mat_oil', prodPlastic, 1)
+	prodPlasticChain.steps.push(matOil)
+
+	const matCrudeOil = new IntermediateProduct('mat_crude_oil', matOil, 3)
+	prodPlasticChain.steps.push(matCrudeOil)
+
+	prodPlasticChain.addSupport(new PopulationSupport(tyEmployees, 667))
+	prodPlasticChain.addSupport(new PopulationSupport(tyEngineers, 1000))
+	prodPlasticChain.addSupport(new PopulationSupport(tyExecutives, 1667))
+
+	tycoonChains.chains.push(prodPlasticChain)
+}
+
+// Engineers
+
+{
+	const prodLuxMeal = new Product('prod_luxury_meal')
+	const prodLuxMealChain = new Chain(prodLuxMeal)
+
+	const matLobster = new IntermediateProduct('mat_lobster', prodLuxMeal, 0.5)
+	prodLuxMealChain.steps.push(matLobster)
+
+	const matTruffle = new IntermediateProduct('mat_truffle', prodLuxMeal, 2)
+	prodLuxMealChain.steps.push(matTruffle)
+
+	prodLuxMealChain.addSupport(new PopulationSupport(tyEngineers, 833))
+	prodLuxMealChain.addSupport(new PopulationSupport(tyExecutives, 1111))
+
+	tycoonChains.chains.push(prodLuxMealChain)
+}
+
+{
+	const prodChampagne = new Product('prod_champagne')
+	const prodChampagneChain = new Chain(prodChampagne)
+
+	const matGrapes = new IntermediateProduct('mat_grapes', prodChampagne, 2)
+	prodChampagneChain.steps.push(matGrapes)
+
+	const matSugar = new IntermediateProduct('mat_sugar', prodChampagne, 1)
+	prodChampagneChain.steps.push(matSugar)
+
+	prodChampagneChain.addSupport(new PopulationSupport(tyEngineers, 1042))
+	prodChampagneChain.addSupport(new PopulationSupport(tyExecutives, 1389))
+
+	tycoonChains.chains.push(prodChampagneChain)
+}
+
+// Executives
+
+{
+	const prodJewelery = new Product('prod_jewelery')
+	const prodJeweleryChain = new Chain(prodJewelery)
+
+	const matGold = new IntermediateProduct('mat_gold', prodJewelery, 1)
+	prodJeweleryChain.steps.push(matGold)
+
+	const matCoal = new IntermediateProduct('mat_coal', matGold, 1)
+	prodJeweleryChain.steps.push(matCoal)
+
+	const matGoldOre = new IntermediateProduct('mat_gold_ore', matGold, 1)
+	prodJeweleryChain.steps.push(matGoldOre)
+
+	const matDiamond = new IntermediateProduct('mat_diamond', prodJewelery, 1)
+	prodJeweleryChain.steps.push(matDiamond)
+
+	prodJeweleryChain.addSupport(new PopulationSupport(tyExecutives, 665))
+
+	tycoonChains.chains.push(prodJeweleryChain)
+}
+
+{
+	const prodPharma = new Product('prod_pharmaceuticals')
+	const prodPharmaChain = new Chain(prodPharma)
+
+	const matSecret = new IntermediateProduct('mat_secret_ingredient', prodPharma, 1)
+	prodPharmaChain.steps.push(matSecret)
+
+	const matOmegaAcid = new IntermediateProduct('mat_omega_acid', matSecret, 3)
+	prodPharmaChain.steps.push(matOmegaAcid)
+
+	const matAlga = new IntermediateProduct('mat_alga', matSecret, 1)
+	prodPharmaChain.steps.push(matAlga)
+
+	const matRareEarth = new IntermediateProduct('mat_rare_earth', prodPharma, 6 / 4)
+	prodPharmaChain.steps.push(matRareEarth)
+
+	const matManganese = new IntermediateProduct('mat_manganese', prodPharma, 3 / 6)
+	prodPharmaChain.steps.push(matManganese)
+
+	prodPharmaChain.addSupport(new PopulationSupport(tyExecutives, 571))
+
+	tycoonChains.chains.push(prodPharmaChain)
+}
+
 // Tech
 
 {
@@ -284,7 +413,11 @@ anno2070.value.chainCategories.push(techChains)
 	const matSand = new IntermediateProduct('mat_sand', matChip, 0.3333333333)
 	prodNeuroImplantChain.steps.push(matSand)
 
-	const matChipRecycled = new IntermediateProduct('mat_chip_recycled', prodNeuroImplant, 0.3333333333)
+	const matChipRecycled = new IntermediateProduct(
+		'mat_chip_recycled',
+		prodNeuroImplant,
+		0.3333333333
+	)
 	prodNeuroImplantChain.steps.push(matChipRecycled)
 
 	prodNeuroImplantChain.addSupport(new PopulationSupport(techResearchers, 500))

@@ -1,5 +1,3 @@
-// TODO: support chain categories
-
 export class Game {
 	readonly id: string
 	readonly name: string
