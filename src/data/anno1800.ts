@@ -10,7 +10,14 @@ import {
 } from '@/types/game'
 import { ref } from 'vue'
 
-const anno1800 = ref(new Game('1800', 'Anno 1800', 'webp'))
+const anno1800 = ref(
+	new Game(
+		'1800',
+		'Anno 1800',
+		'webp',
+		'Anno 1800 needs are counted by number of residences, not by number of citizens.'
+	)
+)
 const popOldWorld = new PopulationCategory('Old World')
 anno1800.value.addPopulationCategory(popOldWorld)
 const owFarmers = new Population('pop_old_world_lvl_1', 'Farmers')
@@ -23,6 +30,7 @@ const owEngineers = new Population('pop_old_world_lvl_4', 'Engineers')
 popOldWorld.population.push(owEngineers)
 const owInvestors = new Population('pop_old_world_lvl_5', 'Investors')
 popOldWorld.population.push(owInvestors)
+owInvestors.count = 760
 
 const oldWorldChains = new ChainCategory('Old world')
 anno1800.value.chainCategories.push(oldWorldChains)
@@ -333,19 +341,19 @@ anno1800.value.chainCategories.push(oldWorldChains)
 	const prodGlasses = new Product('prod_glasses')
 	const prodGlassesChain = new Chain(prodGlasses)
 
-	const matGlass = new IntermediateProduct('mat_glass', prodGlasses, 1/3)
+	const matGlass = new IntermediateProduct('mat_glass', prodGlasses, 1 / 3)
 	prodGlassesChain.steps.push(matGlass)
 
 	const matSand = new IntermediateProduct('mat_sand', matGlass, 1)
 	prodGlassesChain.steps.push(matSand)
 
-	const matBrass = new IntermediateProduct('mat_brass', prodGlasses, 2/3)
+	const matBrass = new IntermediateProduct('mat_brass', prodGlasses, 2 / 3)
 	prodGlassesChain.steps.push(matBrass)
 
-	const matCopper = new IntermediateProduct('mat_copper', matBrass, 1/2)
+	const matCopper = new IntermediateProduct('mat_copper', matBrass, 1 / 2)
 	prodGlassesChain.steps.push(matCopper)
 
-	const matZinc = new IntermediateProduct('mat_zinc', matBrass, 1/2)
+	const matZinc = new IntermediateProduct('mat_zinc', matBrass, 1 / 2)
 	prodGlassesChain.steps.push(matZinc)
 
 	prodGlassesChain.addSupport(new PopulationSupport(owEngineers, 225 / 3))
@@ -354,17 +362,207 @@ anno1800.value.chainCategories.push(oldWorldChains)
 	oldWorldChains.chains.push(prodGlassesChain)
 }
 
-// TODO: coffee https://anno1800.fandom.com/wiki/Coffee
-// TODO: light bulbs https://anno1800.fandom.com/wiki/Light_Bulbs
-// TODO: pocket watches https://anno1800.fandom.com/wiki/Pocket_Watches
+{
+	const prodCoffee = new Product('prod_coffee')
+	const prodCoffeeChain = new Chain(prodCoffee)
+
+	const matMalt = new IntermediateProduct('mat_malt', prodCoffee, 0.5)
+	prodCoffeeChain.steps.push(matMalt)
+
+	const matGrain = new IntermediateProduct('mat_grain', matMalt, 2)
+	prodCoffeeChain.steps.push(matGrain)
+
+	prodCoffeeChain.addSupport(new PopulationSupport(owEngineers, 42.5 / 2))
+	prodCoffeeChain.addSupport(new PopulationSupport(owInvestors, 21.25 / 2))
+
+	oldWorldChains.chains.push(prodCoffeeChain)
+}
+
+{
+	const prodLightBulb = new Product('prod_light_bulb')
+	const prodLightBulbChain = new Chain(prodLightBulb)
+
+	const matFilament = new IntermediateProduct('mat_carbon_filament', prodLightBulb, 1)
+	prodLightBulbChain.steps.push(matFilament)
+
+	const matCoal = new IntermediateProduct('mat_coal', matFilament, 1 / 4)
+	prodLightBulbChain.steps.push(matCoal)
+
+	const matGlass = new IntermediateProduct('mat_glass', prodLightBulb, 0.5)
+	prodLightBulbChain.steps.push(matGlass)
+
+	const matSand = new IntermediateProduct('mat_sand', matGlass, 1)
+	prodLightBulbChain.steps.push(matSand)
+
+	prodLightBulbChain.addSupport(new PopulationSupport(owEngineers, 320 / 4))
+	prodLightBulbChain.addSupport(new PopulationSupport(owInvestors, 160 / 4))
+
+	oldWorldChains.chains.push(prodLightBulbChain)
+}
+
+{
+	const prodPocketWatch = new Product('prod_pocket_watch')
+	const prodPocketWatchChain = new Chain(prodPocketWatch)
+
+	const matGold = new IntermediateProduct('mat_gold', prodPocketWatch, 4 / 6)
+	prodPocketWatchChain.steps.push(matGold)
+
+	const matGoldOre = new IntermediateProduct('mat_gold_ore', matGold, 10 / 4)
+	prodPocketWatchChain.steps.push(matGoldOre)
+
+	const matCoal = new IntermediateProduct('mat_coal', matGold, 1 / 4)
+	prodPocketWatchChain.steps.push(matCoal)
+
+	const matGlass = new IntermediateProduct('mat_glass', prodPocketWatch, 2 / 6)
+	prodPocketWatchChain.steps.push(matGlass)
+
+	const matSand = new IntermediateProduct('mat_sand', matGlass, 1)
+	prodPocketWatchChain.steps.push(matSand)
+
+	prodPocketWatchChain.addSupport(new PopulationSupport(owEngineers, 510 / 6))
+	prodPocketWatchChain.addSupport(new PopulationSupport(owInvestors, 255 / 6))
+
+	oldWorldChains.chains.push(prodPocketWatchChain)
+}
 
 // Level 5: Investors
 
-// TODO: champagne https://anno1800.fandom.com/wiki/Champagne
-// TODO: cigars https://anno1800.fandom.com/wiki/Cigars
-// TODO: chocolate https://anno1800.fandom.com/wiki/Chocolate
-// TODO: steam carriages https://anno1800.fandom.com/wiki/Steam_Carriages
-// TODO: Jewellery https://anno1800.fandom.com/wiki/Jewellery
-// TODO: gramophones https://anno1800.fandom.com/wiki/Gramophones
+{
+	const prodChampagne = new Product('prod_champagne')
+	const prodChampagneChain = new Chain(prodChampagne)
+
+	const matGlass = new IntermediateProduct('mat_glass', prodChampagne, 1)
+	prodChampagneChain.steps.push(matGlass)
+
+	const matSand = new IntermediateProduct('mat_sand', matGlass, 1)
+	prodChampagneChain.steps.push(matSand)
+
+	const matGrapes = new IntermediateProduct('mat_grapes', prodChampagne, 4)
+	prodChampagneChain.steps.push(matGrapes)
+
+	prodChampagneChain.addSupport(new PopulationSupport(owInvestors, 85))
+
+	oldWorldChains.chains.push(prodChampagneChain)
+}
+
+{
+	const prodCigar = new Product('prod_cigar')
+	const prodCigarChain = new Chain(prodCigar)
+
+	const matWoodVeneers = new IntermediateProduct('mat_wood_veneers', prodCigar, 2)
+	prodCigarChain.steps.push(matWoodVeneers)
+
+	const matWood = new IntermediateProduct('mat_wood', matWoodVeneers, 1 / 4)
+	prodCigarChain.steps.push(matWood)
+
+	const matTobacco = new IntermediateProduct('mat_tobacco', prodCigar, 4)
+	prodCigarChain.steps.push(matTobacco)
+
+	prodCigarChain.addSupport(new PopulationSupport(owInvestors, 180 / 2))
+
+	oldWorldChains.chains.push(prodCigarChain)
+}
+
+{
+	const prodChocolate = new Product('prod_chocolate')
+	const prodChocolateChain = new Chain(prodChocolate)
+
+	const matSugar = new IntermediateProduct('mat_sugar', prodChocolate, 1)
+	prodChocolateChain.steps.push(matSugar)
+
+	const matSugarCane = new IntermediateProduct('mat_sugar_cane', matSugar, 1)
+	prodChocolateChain.steps.push(matSugarCane)
+
+	const matCocoa = new IntermediateProduct('mat_cocoa', prodChocolate, 2)
+	prodChocolateChain.steps.push(matCocoa)
+
+	prodChocolateChain.addSupport(new PopulationSupport(owInvestors, 37.5))
+
+	oldWorldChains.chains.push(prodChocolateChain)
+}
+
+{
+	const prodSteamCarriage = new Product('prod_steam_carriage')
+	const prodSteamCarriageChain = new Chain(prodSteamCarriage)
+
+	const matSteamMotor = new IntermediateProduct('mat_steam_motor', prodSteamCarriage, 3 / 2)
+	prodSteamCarriageChain.steps.push(matSteamMotor)
+
+	const matSteel = new IntermediateProduct('mat_steel', matSteamMotor, 2 / 6)
+	prodSteamCarriageChain.steps.push(matSteel)
+
+	const matCoal = new IntermediateProduct('mat_coal', matSteel, 0.5)
+	prodSteamCarriageChain.steps.push(matCoal)
+
+	const matIron = new IntermediateProduct('mat_iron', matSteel, 0.5)
+	prodSteamCarriageChain.steps.push(matIron)
+
+	const matBrass = new IntermediateProduct('mat_brass', matSteamMotor, 4 / 6)
+	prodSteamCarriageChain.steps.push(matBrass)
+
+	const matCopper = new IntermediateProduct('mat_copper', matBrass, 1 / 2)
+	prodSteamCarriageChain.steps.push(matCopper)
+
+	const matZinc = new IntermediateProduct('mat_zinc', matBrass, 1 / 2)
+	prodSteamCarriageChain.steps.push(matZinc)
+
+	const matChassis = new IntermediateProduct('mat_chassis', prodSteamCarriage, 8 / 4)
+	prodSteamCarriageChain.steps.push(matChassis)
+
+	const matWood = new IntermediateProduct('mat_wood', matChassis, 1 / 8)
+	prodSteamCarriageChain.steps.push(matWood)
+
+	const matCaoutchouc = new IntermediateProduct('mat_caoutchouc', matChassis, 4 / 8)
+	prodSteamCarriageChain.steps.push(matCaoutchouc)
+
+	prodSteamCarriageChain.addSupport(new PopulationSupport(owInvestors, 600 / 4))
+
+	oldWorldChains.chains.push(prodSteamCarriageChain)
+}
+
+{
+	const prodJewelry = new Product('prod_jewelry')
+	const prodJewelryChain = new Chain(prodJewelry)
+
+	const matGold = new IntermediateProduct('mat_gold', prodJewelry, 2)
+	prodJewelryChain.steps.push(matGold)
+
+	const matGoldOre = new IntermediateProduct('mat_gold_ore', matGold, 10 / 4)
+	prodJewelryChain.steps.push(matGoldOre)
+
+	const matCoal = new IntermediateProduct('mat_coal', matGold, 1 / 4)
+	prodJewelryChain.steps.push(matCoal)
+
+	const matPearl = new IntermediateProduct('mat_pearl', prodJewelry, 6 / 2)
+	prodJewelryChain.steps.push(matPearl)
+
+	prodJewelryChain.addSupport(new PopulationSupport(owInvestors, 190 / 2))
+
+	oldWorldChains.chains.push(prodJewelryChain)
+}
+
+{
+	const prodGramophone = new Product('prod_gramophone')
+	const prodGramophoneChain = new Chain(prodGramophone)
+
+	const matWoodVeneers = new IntermediateProduct('mat_wood_veneers', prodGramophone, 0.5)
+	prodGramophoneChain.steps.push(matWoodVeneers)
+
+	const matWood = new IntermediateProduct('mat_wood', matWoodVeneers, 1 / 4)
+	prodGramophoneChain.steps.push(matWood)
+
+	const matBrass = new IntermediateProduct('mat_brass', prodGramophone, 0.5)
+	prodGramophoneChain.steps.push(matBrass)
+
+	const matCopper = new IntermediateProduct('mat_copper', matBrass, 1 / 2)
+	prodGramophoneChain.steps.push(matCopper)
+
+	const matZinc = new IntermediateProduct('mat_zinc', matBrass, 1 / 2)
+	prodGramophoneChain.steps.push(matZinc)
+
+	prodGramophoneChain.addSupport(new PopulationSupport(owInvestors, 760 / 8))
+
+	oldWorldChains.chains.push(prodGramophoneChain)
+}
 
 export default anno1800

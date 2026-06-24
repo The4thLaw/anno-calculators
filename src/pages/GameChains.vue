@@ -1,8 +1,5 @@
 <template>
-	<div
-		class="p-GameChains"
-		:style="`background-image: url('${baseUrl}img/${game.id}/art.jpg');`"
-	>
+	<div class="p-GameChains" :style="`background-image: url('${baseUrl}img/${game.id}/art.jpg');`">
 		<header>
 			{{ game.name }}
 		</header>
@@ -11,7 +8,7 @@
 				<div class="select mr-4">
 					<select v-model="selectedSave">
 						<option />
-						<option v-for="(save, name) in gameSaves" :key="name">{{name}}</option>
+						<option v-for="(save, name) in gameSaves" :key="name">{{ name }}</option>
 					</select>
 				</div>
 				<button class="button is-primary mr-4" @click="loadCity">Load</button>
@@ -25,6 +22,9 @@
 			</section>
 
 			<section>
+				<div v-if="game.description" class="content">
+					<p v-text="game.description" />
+				</div>
 				<h1 class="title is-4">Population</h1>
 				<section v-for="cat of game.populationCategories" :key="cat.name">
 					<h2 class="title is-5">{{ cat.name }}</h2>
@@ -50,19 +50,15 @@
 					<h2 class="title is-5">{{ cc.name }}</h2>
 					<section class="grid is-col-min-12">
 						<div v-for="chain of cc.chains" :key="chain.id" class="cell chain">
-							<div
-								class="product"
-								:class="{'no-need': requirements[chain.id]!.adjusted[chain.finalProduct.id] == 0}"
-							>
+							<div class="product"
+								:class="{ 'no-need': requirements[chain.id]!.adjusted[chain.finalProduct.id] == 0 }">
 								<img :src="`${baseUrl}img/${game.id}/${chain.finalProduct.id}.${game.imgExt}`" />
 								{{ requirements[chain.id]!.adjusted[chain.finalProduct.id] }} @
-								<input v-model="chain.finalProduct.efficiency" class="input efficiency" type="number" min="1" /> %
+								<input v-model="chain.finalProduct.efficiency" class="input efficiency" type="number"
+									min="1" /> %
 							</div>
-							<div
-								v-for="step of chain.steps" :key="step.id"
-								:style="`margin-left: ${step.level}em`" class="product"
-								:class="{'no-need': requirements[chain.id]!.adjusted[step.id] == 0}"
-							>
+							<div v-for="step of chain.steps" :key="step.id" :style="`margin-left: ${step.level}em`"
+								class="product" :class="{ 'no-need': requirements[chain.id]!.adjusted[step.id] == 0 }">
 								<img :src="`${baseUrl}img/${game.id}/${step.id}.${game.imgExt}`" />
 								{{ requirements[chain.id]!.adjusted[step.id] }} @
 								<input v-model="step.efficiency" class="input efficiency" type="number" /> %
@@ -75,10 +71,7 @@
 			<section>
 				<h1 class="title is-4">Requirements summary</h1>
 				<div class="grid">
-					<div
-						v-for="(qty, prod) in requirementSummary" :key="prod"
-						:class="{'no-need': qty == 0}"
-					>
+					<div v-for="(qty, prod) in requirementSummary" :key="prod" :class="{ 'no-need': qty == 0 }">
 						<img :src="`${baseUrl}img/${game.id}/${prod}.${game.imgExt}`" />
 						{{ +(qty.toFixed(2)) }}
 					</div>
@@ -130,9 +123,9 @@ const requirements = computed(() => {
 			const allReqs: Record<string, number> = {}
 			const unrounded: Record<string, number> = {}
 			const reqsAt100Eff: Record<string, number> = {}
-			allReqs[c.finalProduct.id] = round(c.supports.map(p => p.population.count / p.limit).reduce((a, b) => a+b, 0) / (c.finalProduct.efficiency / 100))
-			unrounded[c.finalProduct.id] = c.supports.map(p => p.population.count / p.limit).reduce((a, b) => a+b, 0) / (c.finalProduct.efficiency / 100)
-			reqsAt100Eff[c.finalProduct.id] = c.supports.map(p => p.population.count / p.limit).reduce((a, b) => a+b, 0)
+			allReqs[c.finalProduct.id] = round(c.supports.map(p => p.population.count / p.limit).reduce((a, b) => a + b, 0) / (c.finalProduct.efficiency / 100))
+			unrounded[c.finalProduct.id] = c.supports.map(p => p.population.count / p.limit).reduce((a, b) => a + b, 0) / (c.finalProduct.efficiency / 100)
+			reqsAt100Eff[c.finalProduct.id] = c.supports.map(p => p.population.count / p.limit).reduce((a, b) => a + b, 0)
 			ret[c.id] = {
 				adjusted: allReqs,
 				unrounded: unrounded,
@@ -214,7 +207,7 @@ function getSaveData(): SaveData | undefined {
 }
 
 const selectedSave = ref('')
-const saveGames = ref({ saves: {}} as SaveGames)
+const saveGames = ref({ saves: {} } as SaveGames)
 function loadSaves(): void {
 	let jsonSaves = localStorage.getItem(`${LOCAL_STORAGE_ROOT}.cities`)
 	if (!jsonSaves) {
@@ -325,6 +318,7 @@ watch(() => route.params, loadGameData)
 
 	main {
 		background-color: #fffffff0;
+
 		@media (prefers-color-scheme: dark) {
 			& {
 				background-color: #000000d0;
